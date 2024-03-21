@@ -11,9 +11,9 @@ const Footer = () => {
   return (
     <Flex
       style={{
-        position: "absolute",
+        position: "fixed",
         bottom: 0,
-        height: 91,
+        height: 50,
         backgroundColor: "#ffffff",
         maxWidth: 480,
         width: "100%",
@@ -39,7 +39,7 @@ const FooterButton = ({ Icon, text, opacity }) => {
         opacity: opacity,
       }}
     >
-      <Icon style={{ fontSize: 30 }} />
+      <Icon style={{ fontSize: 20 }} />
       <div style={{ fontSize: 12 }}>{text}</div>
     </Button>
   );

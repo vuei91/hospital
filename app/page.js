@@ -7,9 +7,9 @@ export default function Home() {
       <main
         style={{
           width: "100%",
-          height: "calc(100% - 91px)",
+          height: "calc(100% - 50px)",
           backgroundColor: "#F7F9FC",
-          padding: 0.1,
+          padding: 0.01,
           overflow: "scroll",
         }}
       >
