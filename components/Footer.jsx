@@ -20,36 +20,28 @@ const Footer = () => {
         border: "1px solid #F0F0F6",
       }}
     >
-      <Button
-        type="link"
-        style={{ flexGrow: 1, height: "100%", color: "#000000", opacity: 1 }}
-      >
-        <HomeFilled style={{ fontSize: 30 }} />
-        <div style={{ fontSize: 12 }}>홈</div>
-      </Button>
-      <Button
-        type="link"
-        style={{ flexGrow: 1, height: "100%", color: "#000000", opacity: 0.3 }}
-      >
-        <PlusSquareOutlined style={{ fontSize: 30 }} />
-        <div style={{ fontSize: 12 }}>건강관리</div>
-      </Button>
-      <Button
-        type="link"
-        style={{ flexGrow: 1, height: "100%", color: "#000000", opacity: 0.3 }}
-      >
-        <MenuOutlined style={{ fontSize: 30 }} />
-        <div style={{ fontSize: 12 }}>신청내역</div>
-      </Button>
-      <Button
-        type="link"
-        style={{ flexGrow: 1, height: "100%", color: "#000000", opacity: 0.3 }}
-      >
-        <UserOutlined style={{ fontSize: 30 }} />
-        <div style={{ fontSize: 12 }}>마이페이지</div>
-      </Button>
+      <FooterButton text={"홈"} Icon={HomeFilled} opacity={1} />
+      <FooterButton text={"건강관리"} Icon={PlusSquareOutlined} opacity={0.3} />
+      <FooterButton text={"신청내역"} Icon={MenuOutlined} opacity={0.3} />
+      <FooterButton text={"마이페이지"} Icon={UserOutlined} opacity={0.3} />
     </Flex>
   );
 };
 
+const FooterButton = ({ Icon, text, opacity }) => {
+  return (
+    <Button
+      type="link"
+      style={{
+        flexGrow: 1,
+        height: "100%",
+        color: "#000000",
+        opacity: opacity,
+      }}
+    >
+      <Icon style={{ fontSize: 30 }} />
+      <div style={{ fontSize: 12 }}>{text}</div>
+    </Button>
+  );
+};
 export default Footer;
