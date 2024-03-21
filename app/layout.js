@@ -5,8 +5,8 @@ import MobileLayout from "@/components/MobileLayout";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "요양병원리스트",
-  description: "쉽게 요양병원 검색하여 예약하기",
+  title: "요양시설 신청시스템",
+  description: "쉽게 요양시설 검색하여 신청하기",
 };
 
 export default function RootLayout({ children }) {

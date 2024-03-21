@@ -17,7 +17,6 @@ const MobileLayout = ({ children }) => {
         margin: "auto",
         border: "1px solid #eee",
         height: "calc(var(--vh, 1vh) * 100)",
-        position: "relative",
       }}
     >
       {children}

@@ -10,7 +10,7 @@ const Register = ({ inputText, hint, url }) => {
     router.push(url);
   };
   return (
-    <Flex vertical justify="space-between" style={{ height: "100%" }}>
+    <Flex vertical style={{ height: "100%" }}>
       <div style={{ marginTop: 20, position: "relative" }}>
         <Button
           icon={<LeftOutlined />}
