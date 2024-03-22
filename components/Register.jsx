@@ -10,7 +10,7 @@ const Register = ({ inputText, hint, url }) => {
     router.push(url);
   };
   return (
-    <Flex vertical style={{ height: "100%" }}>
+    <Flex vertical style={{ height: "100%", backgroundColor: "white" }}>
       <div style={{ marginTop: 20, position: "relative" }}>
         <Button
           icon={<LeftOutlined />}
@@ -21,9 +21,15 @@ const Register = ({ inputText, hint, url }) => {
         <div style={{ textAlign: "center" }}>{inputText}</div>
       </div>
       <div style={{ flexGrow: 1, margin: "40px 20px 0 20px" }}>
-        <Input placeholder={hint} />
+        <Input placeholder={hint} style={{ background: "#F7F7FA" }} />
       </div>
-      <div style={{ padding: 20, borderTop: "1px solid #ddd" }}>
+      <div
+        style={{
+          padding: 20,
+          borderTop: "1px solid #ddd",
+          backgroundColor: "white",
+        }}
+      >
         <Button
           block
           style={{ color: "white", backgroundColor: "#0085FF" }}

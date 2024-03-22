@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 const Login = () => {
   const router = useRouter();
   const move = () => {
-    router.push("/register");
+    router.push("/register/part1");
   };
   return (
     <div

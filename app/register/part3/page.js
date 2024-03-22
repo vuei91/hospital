@@ -1,7 +1,7 @@
-import React from "react";
 import Register from "@/components/Register";
+import React from "react";
 
-const Register3 = () => {
+const RegisterPart3 = () => {
   return (
     <Register
       url={"/"}
@@ -11,4 +11,4 @@ const Register3 = () => {
   );
 };
 
-export default Register3;
+export default RegisterPart3;
