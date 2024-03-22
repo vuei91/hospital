@@ -1,5 +1,7 @@
+"use client";
 import Footer from "@/components/Footer";
 import { Card, Flex } from "antd";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   return (
@@ -20,6 +22,7 @@ export default function Home() {
             image="🏥"
             title="요양시설 신청하기"
             desc="가까운 집 주변찾기"
+            url="/application/part1"
           />
           <Flex>
             <HomeCard
@@ -57,8 +60,9 @@ export default function Home() {
 }
 
 const HomeCard = (props) => {
+  const router = useRouter();
   return (
-    <Card hoverable style={props.style}>
+    <Card hoverable style={props.style} onClick={() => router.push(props.url)}>
       <div style={{ fontSize: 16 }}>{props.image}</div>
       <strong style={{ fontSize: 16 }}>{props.title}</strong>
       <div style={{ fontSize: 12 }}>{props.desc}</div>

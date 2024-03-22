@@ -12,6 +12,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="text/javascript"
+          src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v78r0xpip1"
+        ></script>
+      </head>
       <body className={inter.className}>
         <MobileLayout>{children}</MobileLayout>
       </body>
