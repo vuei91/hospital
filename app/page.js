@@ -15,39 +15,53 @@ export default function Home() {
       >
         <div style={{ width: "90%", margin: "auto" }}>
           <h4>요양시설 예약시스템</h4>
-          <Card hoverable>
-            <div style={{ fontSize: 16 }}>🏥</div>
-            <strong style={{ fontSize: 16 }}>요양시설 신청하기</strong>
-            <div style={{ fontSize: 12 }}>가까운 집 주변찾기</div>
-          </Card>
+          <HomeCard
+            style={{ flexGrow: 1, margin: "10px 5px 0 0" }}
+            image="🏥"
+            title="요양시설 신청하기"
+            desc="가까운 집 주변찾기"
+          />
           <Flex>
-            <Card hoverable style={{ flexGrow: 1, margin: "10px 5px 0 0" }}>
-              <div style={{ fontSize: 16 }}>🙋🏻‍♀️</div>
-              <strong style={{ fontSize: 16 }}>요양사 부르기</strong>
-              <div style={{ fontSize: 12 }}>친절한 요양사를 찾아요</div>
-            </Card>
-            <Card hoverable style={{ flexGrow: 1, margin: "10px 0 0 5px" }}>
-              <div style={{ fontSize: 16 }}>💭</div>
-              <strong style={{ fontSize: 16 }}>상담신청하기</strong>
-              <div style={{ fontSize: 12 }}>전문가에게 상담해주세요</div>
-            </Card>
+            <HomeCard
+              style={{ flexGrow: 1, margin: "10px 5px 0 0" }}
+              image="🙋🏻‍♀️"
+              title="요양사 부르기"
+              desc="친절한 요양사를 찾아요"
+            />
+            <HomeCard
+              style={{ flexGrow: 1, margin: "10px 0 0 5px" }}
+              image="💭"
+              title="상담신청하기"
+              desc="전문가에게 상담해주세요"
+            />
           </Flex>
           <Card style={{ margin: "20px 0" }}>
             <p>광고란</p>
           </Card>
-          <Card hoverable>
-            <div style={{ fontSize: 16 }}>📺</div>
-            <strong style={{ fontSize: 16 }}>광고 문의</strong>
-            <div style={{ fontSize: 12 }}>병원 및 판매용품 문의해 주세요</div>
-          </Card>
-          <Card hoverable style={{ margin: "10px 0 20px 0" }}>
-            <div style={{ fontSize: 16 }}>💸</div>
-            <strong style={{ fontSize: 16 }}>상품판매</strong>
-            <div style={{ fontSize: 12 }}>장애 용품 등을 판매하고 있어요</div>
-          </Card>
+          <HomeCard
+            image="📺"
+            title="광고 문의"
+            desc="병원 및 판매용품 문의해 주세요"
+          />
+          <HomeCard
+            style={{ margin: "10px 0 20px 0" }}
+            image="💸"
+            title="상품판매"
+            desc="장애 용품 등을 판매하고 있어요"
+          />
         </div>
       </main>
       <Footer />
     </>
   );
 }
+
+const HomeCard = (props) => {
+  return (
+    <Card hoverable style={props.style}>
+      <div style={{ fontSize: 16 }}>{props.image}</div>
+      <strong style={{ fontSize: 16 }}>{props.title}</strong>
+      <div style={{ fontSize: 12 }}>{props.desc}</div>
+    </Card>
+  );
+};
