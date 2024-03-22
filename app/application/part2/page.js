@@ -86,17 +86,24 @@ const ApplicationPart2 = () => {
         style={{
           backgroundColor: "#F7F9FC",
         }}
-      >
-        <Menu.Item key="1" style={{ flexGrow: 1, textAlign: "center" }}>
-          진료시간
-        </Menu.Item>
-        <Menu.Item key="2" style={{ flexGrow: 1, textAlign: "center" }}>
-          진료정보
-        </Menu.Item>
-        <Menu.Item key="3" style={{ flexGrow: 1, textAlign: "center" }}>
-          병원위치
-        </Menu.Item>
-      </Menu>
+        items={[
+          {
+            key: 1,
+            label: "진료시간",
+            style: { flexGrow: 1, textAlign: "center" },
+          },
+          {
+            key: 2,
+            label: "진료정보",
+            style: { flexGrow: 1, textAlign: "center" },
+          },
+          {
+            key: 3,
+            label: "병원위치",
+            style: { flexGrow: 1, textAlign: "center" },
+          },
+        ]}
+      ></Menu>
       <div style={{ height: "53%", overflow: "scroll" }}>
         <div style={{ margin: 20 }}>
           <strong style={{ fontSize: 16 }}>진료시간</strong>
