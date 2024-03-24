@@ -1,6 +1,8 @@
+"use client";
 import BackButtonHeader from "@/components/BackButtonHeader";
 import { DownOutlined } from "@ant-design/icons";
 import { Button, Card, Dropdown, Flex, Menu, Space } from "antd";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const list = [
@@ -109,8 +111,13 @@ const ApplicationPart1Nav = () => (
 );
 
 const ApplicationPart2Card = ({ title, dist, addr, review }) => {
+  const router = useRouter();
   return (
-    <Card hoverable style={{ lineHeight: 1.6, marginBottom: 10 }}>
+    <Card
+      hoverable
+      style={{ lineHeight: 1.6, marginBottom: 10 }}
+      onClick={() => router.push("/application/part2")}
+    >
       <strong style={{ fontSize: 16 }}>{title}</strong>
       <div style={{ fontSize: 12 }}>
         <strong>{dist}</strong>&nbsp;{addr}

@@ -1,8 +1,11 @@
+"use client";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Button, Flex } from "antd";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const BackButtonHeader = ({ title }) => {
+  const router = useRouter();
   return (
     <Flex
       style={{
@@ -16,6 +19,7 @@ const BackButtonHeader = ({ title }) => {
         icon={<ArrowLeftOutlined />}
         type="text"
         style={{ marginLeft: 10 }}
+        onClick={() => router.back()}
       />
       <div
         style={{
