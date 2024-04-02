@@ -9,7 +9,7 @@ export const metadata = {
   description: "쉽게 요양시설 검색하여 신청하기",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>

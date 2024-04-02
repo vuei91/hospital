@@ -2,8 +2,24 @@
 import Footer from "@/components/Footer";
 import { Card, Flex } from "antd";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
+  const router = useRouter();
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    fetch(`http://localhost:8080/`, {
+      headers: { Authorization: jwt },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          router.push("/login");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <>
       <main
