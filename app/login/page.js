@@ -1,29 +1,30 @@
 "use client";
 import { Button } from "antd";
-import React from "react";
+import axios from "axios";
 import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 const Login = () => {
   const router = useRouter();
-  const move = () => {
-    router.push("/register/part1");
-  };
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/verify", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) router.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const kakaoLogin = () => {
-    const REST_API_KEY = "0f46caa576892c645d6f9a3eaaaabcd3";
-    const REDIRECT_URI = "http://localhost:3000/login/kakao";
-    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    window.location.href = `http://localhost:8080/oauth2/authorization/kakao`;
   };
-  const normalLogin = async () => {
-    const formData = new FormData();
-    formData.append("username", "vuei");
-    formData.append("password", "1234");
-    const resp = await fetch(`http://localhost:8080/login`, {
-      method: "POST",
-      body: formData,
-    });
-    const jwt = resp.headers.get("Authorization");
-    localStorage.setItem("jwt", jwt);
-    router.push("/");
+  const naverLogin = () => {
+    window.location.href = `http://localhost:8080/oauth2/authorization/naver`;
   };
   return (
     <div
@@ -55,12 +56,12 @@ const Login = () => {
         <Button
           block
           style={{ backgroundColor: "#2DB400", color: "white" }}
-          onClick={normalLogin}
+          onClick={naverLogin}
         >
           네이버 로그인
         </Button>
         <div style={{ margin: 5 }}></div>
-        <Button
+        {/* <Button
           block
           style={{
             backgroundColor: "#000000",
@@ -69,7 +70,7 @@ const Login = () => {
           onClick={move}
         >
           애플 로그인
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

@@ -1,23 +1,23 @@
 "use client";
 import Footer from "@/components/Footer";
 import { Card, Flex } from "antd";
-import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    fetch(`http://localhost:8080/`, {
-      headers: { Authorization: jwt },
-    })
+    const token = localStorage.getItem("token");
+    const headers = { Authorization: "Bearer " + token };
+    axios
+      .get("http://localhost:8080/verify", { headers })
       .then((response) => {
-        if (!response.ok) {
-          router.push("/login");
-        }
+        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
+        router.push("/login");
       });
   }, []);
   return (
