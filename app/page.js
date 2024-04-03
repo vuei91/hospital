@@ -7,19 +7,10 @@ import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const headers = { Authorization: "Bearer " + token };
-    axios
-      .get("http://localhost:8080/verify", { headers })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        router.push("/login");
-      });
-  }, []);
+  const logout = () => {
+    localStorage.removeItem("token");
+    router.push("/login");
+  };
   return (
     <>
       <main
@@ -54,7 +45,7 @@ export default function Home() {
               desc="전문가에게 상담해주세요"
             />
           </Flex>
-          <Card style={{ margin: "20px 0" }}>
+          <Card style={{ margin: "20px 0" }} onClick={logout}>
             <p>광고란</p>
           </Card>
           <HomeCard

@@ -7,9 +7,9 @@ const oauth = () => {
   const router = useRouter();
   useEffect(() => {
     window.localStorage.setItem("token", params.token);
-    router.push("/");
+    router.push("/register/part1");
   }, []);
-  return <div>Success</div>;
+  return null;
 };
 
 export default oauth;

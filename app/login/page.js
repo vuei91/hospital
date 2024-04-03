@@ -5,21 +5,6 @@ import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 const Login = () => {
-  const router = useRouter();
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/verify", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => {
-        if (res.status === 200) router.push("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
   const kakaoLogin = () => {
     window.location.href = `http://localhost:8080/oauth2/authorization/kakao`;
   };
