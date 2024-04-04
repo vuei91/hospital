@@ -1,4 +1,4 @@
-import Register from "@/app/_components/Register";
+import Register from "@/app/(routes)/register/_components/Register";
 import React from "react";
 
 const RegisterPart3 = () => {
