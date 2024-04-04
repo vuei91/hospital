@@ -12,14 +12,15 @@ const LoginLayout = ({ children }) => {
       return;
     }
     axios
-      .get("http://localhost:8080/verify", {
+      .get(`${BACKEND_URL}/verify`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log(response);
-        if (response.status !== 200) router.push("/login");
+        if (response.status !== 200) {
+          router.push("/login");
+        }
       })
       .catch((error) => {
         console.error(error);

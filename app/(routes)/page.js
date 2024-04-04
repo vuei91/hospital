@@ -1,5 +1,5 @@
 "use client";
-import Footer from "@/components/Footer";
+import Footer from "@/app/_components/Footer";
 import { Card, Flex } from "antd";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";

@@ -1,7 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import MobileLayout from "@/components/MobileLayout";
-import LoginLayout from "@/components/LoginLayout";
+import MobileLayout from "@/app/_components/MobileLayout";
+import LoginLayout from "@/app/_components/LoginLayout";
+import { MAP_CLIENT_ID } from "../_constants";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,7 @@ export default async function RootLayout({ children }) {
       <head>
         <script
           type="text/javascript"
-          src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=v78r0xpip1"
+          src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${MAP_CLIENT_ID}`}
         ></script>
       </head>
       <body className={inter.className}>

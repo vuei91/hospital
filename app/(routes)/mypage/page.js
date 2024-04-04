@@ -1,5 +1,5 @@
 "use client";
-import Footer from "@/components/Footer";
+import Footer from "@/app/_components/Footer";
 import { Button, Flex } from "antd";
 import React from "react";
 

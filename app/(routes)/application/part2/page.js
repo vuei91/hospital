@@ -1,5 +1,5 @@
 "use client";
-import BackButtonHeader from "@/components/BackButtonHeader";
+import BackButtonHeader from "@/app/_components/BackButtonHeader";
 import { Avatar, Button, Flex, Menu, Table } from "antd";
 import React, { useEffect } from "react";
 
