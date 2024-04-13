@@ -1,9 +1,7 @@
 "use client";
-import { BACKEND_URL } from "@/app/_constants";
-import { Button } from "antd";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import {BACKEND_URL} from "@/app/_constants";
+import {Button} from "antd";
+import React from "react";
 
 const Login = () => {
   const kakaoLogin = () => {

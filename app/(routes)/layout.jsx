@@ -1,8 +1,7 @@
-import { Inter } from "next/font/google";
+import {Inter} from "next/font/google";
 import "./globals.css";
 import MobileLayout from "@/app/_components/MobileLayout";
-import LoginLayout from "@/app/_components/LoginLayout";
-import { MAP_CLIENT_ID } from "../_constants";
+import {MAP_CLIENT_ID} from "../_constants";
 
 const inter = Inter({ subsets: ["latin"] });
 
