@@ -21,9 +21,10 @@ export default async function RootLayout({ children }) {
         ></script>
       </head>
       <body className={inter.className}>
-        <LoginLayout>
-          <MobileLayout>{children}</MobileLayout>
-        </LoginLayout>
+        {/*<LoginLayout>*/}
+        {/*  <MobileLayout>{children}</MobileLayout>*/}
+        {/*</LoginLayout>*/}
+        <MobileLayout>{children}</MobileLayout>
       </body>
     </html>
   );

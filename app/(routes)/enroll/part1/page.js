@@ -1,5 +1,5 @@
 "use client";
-import BackButtonHeader from "@/app/(routes)/application/_components/BackButtonHeader";
+import BackButtonHeader from "@/app/(routes)/enroll/_components/BackButtonHeader";
 import { DownOutlined } from "@ant-design/icons";
 import { Button, Card, Dropdown, Flex, Menu, Space } from "antd";
 import { useRouter } from "next/navigation";
