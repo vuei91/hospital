@@ -39,3 +39,8 @@ body {
     width: 100%;
     z-index: 2;
 }
+
+/* collapse padding 문제로 인한 checkbox checked 문제 해결*/
+.container .ant-collapse-header {
+    padding:0 !important;
+}
