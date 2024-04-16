@@ -2,6 +2,7 @@
 import Footer from "@/app/_components/Footer";
 import { Button, Flex } from "antd";
 import React from "react";
+import BottomNav from "@/app/_components/BottomNav";
 
 const mypage = () => {
   return (
@@ -73,7 +74,7 @@ const mypage = () => {
             회원탈퇴
           </Button>
         </div>
-        <Footer />
+        <BottomNav />
       </div>
     </>
   );
