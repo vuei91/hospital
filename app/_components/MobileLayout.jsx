@@ -10,21 +10,7 @@ const MobileLayout = ({ children }) => {
   useEffect(() => {
     setScreenSize();
   });
-  return (
-    <div
-      style={{
-        maxWidth: 480,
-        width: "100%",
-        margin: "auto",
-        border: "1px solid #eee",
-        backgroundColor: "#F7F9FC",
-        height: "calc(var(--vh, 1vh) * 100)",
-        position: "relative",
-      }}
-    >
-      {children}
-    </div>
-  );
+  return <div className="mobile">{children}</div>;
 };
 
 export default MobileLayout;

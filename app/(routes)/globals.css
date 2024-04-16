@@ -3,6 +3,16 @@ body {
     padding: 0;
 }
 
+.mobile {
+    max-width: 480px;
+    width: 100%;
+    margin: auto;
+    border: 1px solid #eee;
+    background-color: #F7F9FC;
+    height: 100vh;
+    position: relative;
+}
+
 .bottom {
     width: 100%;
     max-width: 480px;
