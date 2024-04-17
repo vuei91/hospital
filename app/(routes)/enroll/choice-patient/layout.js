@@ -7,7 +7,7 @@ const ChoicePatientLayout = ({ children }) => {
     <>
       <TopNav title={"신청하기"} isBack />
       <div className="container">{children}</div>
-      <BottomButton />
+      <BottomButton text={"신청하기"} />
     </>
   );
 };

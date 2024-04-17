@@ -2,12 +2,12 @@
 import React from "react";
 import { Button, Flex } from "antd";
 
-const BottomButton = () => {
+const BottomButton = ({ text }) => {
   return (
     <div className="bottom">
       <Flex style={{ height: 80 }} align="center" justify="center">
         <Button block type={"primary"} style={{ height: 48, width: "90%" }}>
-          다음
+          {text}
         </Button>
       </Flex>
     </div>

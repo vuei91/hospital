@@ -31,6 +31,18 @@ body {
     overflow-y: scroll;
 }
 
+.none_bottom {
+    height: calc(100vh - 48px);
+}
+
+.hospital-container {
+    width: 100%;
+    position: relative;
+    top: 46px;
+    height: calc(100vh - 220px);
+    overflow-y: scroll;
+}
+
 .top {
     top: 0;
     position: fixed;

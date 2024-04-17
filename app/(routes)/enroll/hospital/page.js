@@ -59,65 +59,15 @@ const data = [
     time: "휴무",
   },
 ];
-const ApplicationPart2 = () => {
+const Hospital = () => {
   return (
-    <div style={{ height: "100%", overflow: "hidden" }}>
-      <BackButtonHeader title={"신청하기(2/3)"} />
-      <HospitalInfo />
-      <DiagnosisMenu />
-      <div style={{ height: "calc(100% - 220px)", overflow: "scroll" }}>
-        <DiagnosisTime />
-        <DiagnosisInfo />
-        <HospitalPlace />
-      </div>
-      <ButtonSpace />
-    </div>
+    <>
+      <DiagnosisTime />
+      <DiagnosisInfo />
+      <HospitalPlace />
+    </>
   );
 };
-
-const HospitalInfo = () => (
-  <Flex align="center">
-    <Avatar
-      style={{ backgroundColor: "white", margin: "10px 20px 10px 10px" }}
-      size="large"
-      icon={"🏥"}
-    />
-    <div style={{ lineHeight: 1.6 }}>
-      <strong style={{ fontSize: 16 }}>무지개요양병원</strong>
-      <div style={{ fontSize: 12, color: "#777777" }}>
-        고양시 일산동구 덕이동
-      </div>
-    </div>
-  </Flex>
-);
-
-const DiagnosisMenu = () => (
-  <Menu
-    mode="horizontal"
-    defaultSelectedKeys={["1"]}
-    style={{
-      backgroundColor: "#F7F9FC",
-      height: 40,
-    }}
-    items={[
-      {
-        key: 1,
-        label: "진료시간",
-        style: { flexGrow: 1, textAlign: "center" },
-      },
-      {
-        key: 2,
-        label: "진료정보",
-        style: { flexGrow: 1, textAlign: "center" },
-      },
-      {
-        key: 3,
-        label: "병원위치",
-        style: { flexGrow: 1, textAlign: "center" },
-      },
-    ]}
-  ></Menu>
-);
 
 const DiagnosisTime = () => (
   <div style={{ margin: 20 }}>
@@ -155,7 +105,7 @@ const DiagnosisTime = () => (
 
 const DiagnosisInfo = () => (
   <div style={{ backgroundColor: "white" }}>
-    <div>
+    <div id={"info"}>
       <InfoCard title={"의사정보"} total="2명">
         <Info name="강호동" />
         <Info name="유재석" />
@@ -258,4 +208,4 @@ const ButtonSpace = () => (
   </div>
 );
 
-export default ApplicationPart2;
+export default Hospital;

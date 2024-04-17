@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
     <>
       <TopNav title={"환자정보입력"} isBack />
       <div className="container">{children}</div>
-      <BottomButton />
+      <BottomButton text={"등록"} />
     </>
   );
 };
