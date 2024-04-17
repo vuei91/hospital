@@ -180,31 +180,4 @@ const InfoCard = ({ title, total, children }) => (
   </div>
 );
 
-const ButtonSpace = () => (
-  <div style={{ position: "fixed", bottom: 0, width: "100%" }}>
-    <Flex
-      style={{
-        width: "100%",
-        maxWidth: 480,
-        height: 70,
-        backgroundColor: "white",
-      }}
-    >
-      <Button
-        block
-        style={{ flexGrow: 1, margin: "10px 5px 10px 10px", height: 40 }}
-      >
-        추천하기
-      </Button>
-      <Button
-        type="primary"
-        block
-        style={{ flexGrow: 1, margin: "10px 10px 10px 5px", height: 40 }}
-      >
-        예약문의
-      </Button>
-    </Flex>
-  </div>
-);
-
 export default Hospital;

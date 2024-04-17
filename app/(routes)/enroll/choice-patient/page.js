@@ -4,10 +4,6 @@ import { Button, Checkbox, Collapse, Space } from "antd";
 // 만약 등록된 환자가 없으면, 등록화면으로 보여주기
 // 등록된 환자가 있으면 체크박스 보여주기
 const ChoicePatient = () => {
-  const [people, setPeople] = useState([
-    { name: "김요양" },
-    { name: "김무제" },
-  ]);
   const [keys, setKeys] = useState([]);
   const onChange = (e) => {
     if (e.target.checked) {
@@ -107,14 +103,5 @@ const PatientDetail = () => {
     </>
   );
 };
-
-const Content = ({ title, content }) => (
-  <Space>
-    <div style={{ color: "#717375", fontSize: 16, fontWeight: 400, width: 60 }}>
-      {title}
-    </div>
-    <div style={{ fontSize: 16, fontWeight: 400 }}>{content}</div>
-  </Space>
-);
 
 export default ChoicePatient;
