@@ -26,7 +26,7 @@ body {
 .container {
     width: 100%;
     position: relative;
-    top: 48px;
+    top: 44px;
     height: calc(100vh - 96px);
     overflow-y: scroll;
 }
@@ -38,7 +38,7 @@ body {
 .hospital-container {
     width: 100%;
     position: relative;
-    top: 46px;
+    top: 44px;
     height: calc(100vh - 220px);
     overflow-y: scroll;
 }

@@ -30,7 +30,7 @@ const BottomNav = () => {
       badge: "5",
     },
     {
-      key: "/history/index",
+      key: "/history/main",
       title: "신청내역",
       icon: <MenuOutlined />,
       badge: "99+",
