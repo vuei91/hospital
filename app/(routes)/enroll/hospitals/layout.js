@@ -1,9 +1,6 @@
 import React from "react";
 import TopNav from "@/app/_components/TopNav";
-import BottomNav from "@/app/_components/BottomNav";
-import BottomButton from "@/app/_components/BottomButton";
-import { Button, Dropdown, Flex, Menu, Select, Space } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { Flex, Menu, Select } from "antd";
 
 const HospitalsLayout = ({ children }) => {
   return (
