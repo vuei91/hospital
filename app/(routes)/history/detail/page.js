@@ -3,7 +3,7 @@ import React from "react";
 import { Steps } from "antd-mobile";
 import { useRouter } from "next/navigation";
 import { RightOutlined } from "@ant-design/icons";
-import { Button, Flex, Popover } from "antd";
+import { Button, Flex } from "antd";
 import { StepTag } from "@/app/(routes)/history/_components/Tags";
 
 const HistoryDetail = () => {
@@ -68,7 +68,6 @@ const SecondInfo = () => {
 };
 
 const ThirdInfo = () => {
-  const customDot = (dot, { status, index }) => <Popover>{dot}</Popover>;
   return (
     <div
       style={{

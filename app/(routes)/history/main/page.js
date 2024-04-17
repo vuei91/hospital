@@ -1,13 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import { Button, NavBar, Space, Tabs } from "antd-mobile";
+import { Button, Space, Tabs } from "antd-mobile";
 import {
   Complete,
   Contacting,
   Waiting,
 } from "@/app/(routes)/history/_components/Tags";
 import { useRouter } from "next/navigation";
-import BottomNav from "@/app/_components/BottomNav";
 import { List } from "antd";
 
 const HistoryMain = () => {

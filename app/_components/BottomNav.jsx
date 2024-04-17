@@ -3,9 +3,7 @@ import React from "react";
 import {
   HomeFilled,
   MenuOutlined,
-  MessageFilled,
   PlusSquareOutlined,
-  UnorderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { TabBar } from "antd-mobile";
