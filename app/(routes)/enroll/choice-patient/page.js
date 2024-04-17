@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Checkbox, Collapse, Space, List } from "antd";
+import { Checkbox, Collapse, Space, List, Button } from "antd";
 // 만약 등록된 환자가 없으면, 등록화면으로 보여주기
 // 등록된 환자가 있으면 체크박스 보여주기
 const ChoicePatient = () => {
@@ -101,6 +101,9 @@ const PatientDetail = () => {
           </tr>
         </tbody>
       </table>
+      <Button block size={"large"}>
+        수정하기
+      </Button>
     </>
   );
 };
