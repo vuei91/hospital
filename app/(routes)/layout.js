@@ -2,7 +2,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import MobileLayout from "@/app/_components/MobileLayout";
 import { MAP_CLIENT_ID } from "../_constants";
-import HomeMobileLayout from "@/app/_components/HomeMobileLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 

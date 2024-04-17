@@ -7,10 +7,6 @@ import { Button, Flex } from "antd";
 import { StepTag } from "@/app/(routes)/history/_components/Tags";
 
 const HistoryDetail = () => {
-  const router = useRouter();
-  const back = () => {
-    router.back();
-  };
   return (
     <>
       <FirstInfo />

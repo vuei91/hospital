@@ -1,11 +1,9 @@
 "use client";
 import React from "react";
-import { Card, Flex, Image } from "antd";
+import { Flex, Image } from "antd";
 import HomeCard from "@/app/(routes)/home/_component/HomeCard";
-import { useRouter } from "next/navigation";
 
 const Main = () => {
-  const router = useRouter();
   return (
     <Flex
       vertical

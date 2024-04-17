@@ -3,7 +3,6 @@ import React from "react";
 import TopNav from "@/app/_components/TopNav";
 import BottomTwoButton from "@/app/_components/BottomTwoButton";
 import { Avatar, Flex, Menu } from "antd";
-import { Modal } from "antd-mobile";
 import { useRouter } from "next/navigation";
 
 const HospitalLayout = ({ children }) => {

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
 import { Flex, List } from "antd";
 import { DayTag } from "@/app/(routes)/history/_components/Tags";
 
@@ -36,10 +35,6 @@ const data = [
 ];
 
 const HistoryProgress = () => {
-  const router = useRouter();
-  const back = () => {
-    router.back();
-  };
   return (
     <div style={{ backgroundColor: "white" }}>
       <List
