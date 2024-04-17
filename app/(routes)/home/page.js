@@ -18,7 +18,7 @@ const Main = () => {
         image="🏥"
         title="요양시설 신청하기"
         desc="가까운 집 주변찾기"
-        url="/application/part1"
+        url={"/enroll/hospitals"}
       />
       <Flex style={{ flexGrow: 1 }}>
         <HomeCard

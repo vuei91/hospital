@@ -1,14 +1,17 @@
 "use client";
-import {BACKEND_URL} from "@/app/_constants";
-import {Button} from "antd";
+import { BACKEND_URL } from "@/app/_constants";
+import { Button } from "antd";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const router = useRouter();
   const kakaoLogin = () => {
-    window.location.href = `${BACKEND_URL}/oauth2/authorization/kakao`;
+    router.push("/home");
+    // window.location.href = `${BACKEND_URL}/oauth2/authorization/kakao`;
   };
   const naverLogin = () => {
-    window.location.href = `${BACKEND_URL}/oauth2/authorization/naver`;
+    // window.location.href = `${BACKEND_URL}/oauth2/authorization/naver`;
   };
   return (
     <div

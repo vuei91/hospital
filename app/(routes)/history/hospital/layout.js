@@ -13,7 +13,7 @@ const HospitalLayout = ({ children }) => {
   };
   return (
     <>
-      <TopNav title={"신청하기"} isBack />
+      <TopNav title={"병원 정보"} />
       <div style={{ position: "relative", top: 46 }}>
         <HospitalInfo />
         <DiagnosisMenu />

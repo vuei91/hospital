@@ -46,6 +46,8 @@ const FirstInfo = () => {
 };
 
 const SecondInfo = () => {
+  const router = useRouter();
+
   return (
     <Flex vertical justify={"center"} style={{ width: "100%", height: 120 }}>
       <div style={{ padding: 20 }}>
@@ -59,7 +61,11 @@ const SecondInfo = () => {
         >
           자세한 정보
         </strong>
-        <Button block size={"large"}>
+        <Button
+          block
+          size={"large"}
+          onClick={() => router.push("/history/progress")}
+        >
           진행현황 한눈에 보기
         </Button>
       </div>
@@ -68,6 +74,7 @@ const SecondInfo = () => {
 };
 
 const ThirdInfo = () => {
+  const router = useRouter();
   return (
     <div
       style={{
@@ -108,7 +115,7 @@ const ThirdInfo = () => {
         </Flex>
         <Flex justify="space-between" style={{ padding: "10px 20px 0 20px" }}>
           <div style={{ color: "#717375", fontSize: 16 }}>병원정보</div>
-          <div>
+          <div onClick={() => router.push("/history/hospital")}>
             <strong style={{ fontSize: 16 }}>자세히보기</strong>
             &nbsp;
             <RightOutlined size={14} color={"#717375"} />

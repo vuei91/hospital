@@ -9,6 +9,7 @@ const list = [
     dist: "27km",
     addr: "고양시 일산서구 덕이동",
     review: "126",
+    url: "/enroll/hospital",
   },
   {
     title: "차연 요양병원",
@@ -103,19 +104,20 @@ const Hospitals = () => {
           dist={item.dist}
           addr={item.addr}
           review={item.review}
+          url={item.url}
         />
       ))}
     </Flex>
   );
 };
 
-const HospitalsCard = ({ title, dist, addr, review }) => {
+const HospitalsCard = ({ title, dist, addr, review, url }) => {
   const router = useRouter();
   return (
     <Card
       hoverable
       style={{ lineHeight: 1.6, marginBottom: 10 }}
-      onClick={() => router.push("/application/part2")}
+      onClick={() => router.push(url)}
     >
       <strong style={{ fontSize: 16 }}>{title}</strong>
       <div style={{ fontSize: 12 }}>

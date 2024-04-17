@@ -45,7 +45,7 @@ const HistoryProgress = () => {
       <List
         size="large"
         dataSource={data}
-        renderItem={(item) => (
+        renderItem={(item, index) => (
           <List.Item style={{ width: "100%" }}>
             <ProgressCard
               day={item.day}
@@ -93,8 +93,8 @@ const ProgressCard = ({ day, step, content, hospitals, active }) => {
                 borderRadius: 5,
               }}
             >
-              {hospitals?.map((name) => (
-                <Flex align={"center"}>
+              {hospitals?.map((name, index) => (
+                <Flex align={"center"} key={index}>
                   <Dot />
                   <div>{name}</div>
                 </Flex>
