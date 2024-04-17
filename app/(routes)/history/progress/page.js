@@ -40,7 +40,7 @@ const HistoryProgress = () => {
       <List
         size="large"
         dataSource={data}
-        renderItem={(item, index) => (
+        renderItem={(item) => (
           <List.Item style={{ width: "100%" }}>
             <ProgressCard
               day={item.day}
