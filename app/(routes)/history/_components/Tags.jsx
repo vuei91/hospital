@@ -31,3 +31,12 @@ export const StepTag = ({ text }) => (
     {text}
   </Tag>
 );
+
+export const DayTag = ({ text, disabled }) => (
+  <Tag
+    color={disabled ? "#F7F8F9" : "#CCE8FF"}
+    style={{ "--text-color": disabled ? "#BBC1C4" : "#0085FF" }}
+  >
+    {text}
+  </Tag>
+);

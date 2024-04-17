@@ -78,6 +78,7 @@ const ThirdInfo = () => {
       }}
     >
       <div style={{ padding: 20 }}>
+        <NumberDesign number={1} />
         <strong style={{ fontSize: 16, lineHeight: 2 }}>무지개 요양병원</strong>
         <div style={{ fontSize: 14, color: "#717375" }}>
           경기도 고양시 덕약구 원당로59번길 23
@@ -117,5 +118,19 @@ const ThirdInfo = () => {
     </div>
   );
 };
+
+const NumberDesign = ({ number }) => (
+  <span
+    style={{
+      border: "1px solid #DFE2E4",
+      borderRadius: 5,
+      fontSize: 14,
+      padding: "2px 7px",
+      marginRight: 5,
+    }}
+  >
+    {number}
+  </span>
+);
 
 export default HistoryDetail;
