@@ -1,8 +1,6 @@
 "use client";
-import Footer from "@/app/_components/Footer";
 import { Button, Flex } from "antd";
 import React from "react";
-import BottomNav from "@/app/_components/BottomNav";
 
 const mypage = () => {
   return (
