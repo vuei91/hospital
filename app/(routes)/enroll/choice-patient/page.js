@@ -35,7 +35,7 @@ const ChoicePatient = () => {
               {"김요양"}
             </Checkbox>
           ),
-          children: <div>{"안녕하세요"}</div>,
+          children: <PatientDetail />,
           showArrow: false,
           headerClass: "header",
         },
@@ -50,12 +50,68 @@ const ChoicePatient = () => {
               {"김무제"}
             </Checkbox>
           ),
-          children: <div>{"안녕하세요"}</div>,
+          children: <PatientDetail />,
           showArrow: false,
         },
       ]}
     />
   );
 };
+
+const PatientDetail = () => {
+  return (
+    <>
+      <style jsx>{`
+        th {
+          color: #717375;
+          font-size: 16px;
+          font-weight: 400;
+          text-align: left;
+          vertical-align: top;
+        }
+
+        td {
+          font-size: 16px;
+        }
+      `}</style>
+      <table style={{ width: "100%" }}>
+        <colgroup>
+          <col width={"18%"} />
+          <col width={"82%"} />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th>보호자</th>
+            <td>김무제</td>
+          </tr>
+          <tr>
+            <th>장애 종류</th>
+            <td>시각장애</td>
+          </tr>
+          <tr>
+            <th>장애 등급</th>
+            <td>2등급</td>
+          </tr>
+          <tr>
+            <th>주소</th>
+            <td>
+              경기도 고양시 덕양구 59번길 35-14 성산빌라 A동 204호 fdsfa fdas
+              fdas
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </>
+  );
+};
+
+const Content = ({ title, content }) => (
+  <Space>
+    <div style={{ color: "#717375", fontSize: 16, fontWeight: 400, width: 60 }}>
+      {title}
+    </div>
+    <div style={{ fontSize: 16, fontWeight: 400 }}>{content}</div>
+  </Space>
+);
 
 export default ChoicePatient;
