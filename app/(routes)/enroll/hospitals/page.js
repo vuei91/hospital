@@ -2,8 +2,12 @@
 import { Card, Flex } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { BACKEND_URL } from "@/app/_constants";
+import useHospitalQuery from "@/app/_hooks/useHospitalQuery";
 
-const list = [
+const hospitals = [
   {
     title: "무지개 요양병원",
     dist: "27km",
@@ -86,6 +90,24 @@ const list = [
 ];
 
 const Hospitals = () => {
+  const router = useRouter();
+  const { data: resp } = useHospitalQuery(localStorage.getItem("token"));
+  const hospitals = resp?.data || [];
+  // const { isLoading, data, error } = useQuery({
+  //   queryKey: ["hospitals"],
+  //   queryFn: (e) =>
+  //     axios.get(`${BACKEND_URL}/hospital/`, {
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //       },
+  //     }),
+  // });
+  // if (isLoading && !data) return null;
+  // if (error?.response?.status === 401) {
+  //   router.push("/login");
+  //   return null;
+  // }
+  // const hospitals = data.data.data;
   return (
     <Flex
       vertical
@@ -97,13 +119,13 @@ const Hospitals = () => {
         position: "relative",
       }}
     >
-      {list.map((item, key) => (
+      {hospitals.map((item, key) => (
         <HospitalsCard
           key={key}
-          title={item.title}
-          dist={item.dist}
-          addr={item.addr}
-          review={item.review}
+          title={item.name}
+          dist={"27km"}
+          addr={item.address}
+          review={"12"}
           url={item.url}
         />
       ))}
