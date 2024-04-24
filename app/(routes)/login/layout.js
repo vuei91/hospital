@@ -1,17 +1,13 @@
 "use client";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-import { BACKEND_URL } from "../_constants";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { BACKEND_URL } from "@/app/_constants";
 
 const LoginLayout = ({ children }) => {
   const router = useRouter();
   useEffect(() => {
     const token = window.localStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-      return;
-    }
     axios
       .get(`${BACKEND_URL}/verify`, {
         headers: {
@@ -19,13 +15,12 @@ const LoginLayout = ({ children }) => {
         },
       })
       .then((response) => {
-        if (response.data.status === "error") {
-          router.push("/login");
+        if (response.data.status === "success") {
+          router.push("/home");
         }
       })
       .catch((error) => {
         console.error(error);
-        router.push("/login");
       });
   }, []);
   return <>{children}</>;

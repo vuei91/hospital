@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import MobileLayout from "@/app/_components/MobileLayout";
 import { MAP_CLIENT_ID } from "../_constants";
+import LoginLayout from "@/app/_components/LoginLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +21,9 @@ export default async function RootLayout({ children }) {
         ></script>
       </head>
       <body className={inter.className}>
-        {/*<LoginLayout>*/}
-        <MobileLayout>{children}</MobileLayout>
-        {/*</LoginLayout>*/}
+        <LoginLayout>
+          <MobileLayout>{children}</MobileLayout>
+        </LoginLayout>
       </body>
     </html>
   );

@@ -7,7 +7,7 @@ const oauth = () => {
   const router = useRouter();
   useEffect(() => {
     window.localStorage.setItem("token", params.token);
-    router.push("/register/part1");
+    router.push("/home");
   }, []);
   return null;
 };
