@@ -1,33 +1,26 @@
 "use client";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { BACKEND_URL } from "../_constants";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { getApi } from "@/app/_hooks/api";
 
 const LoginLayout = ({ children }) => {
+  const pathname = usePathname();
   const router = useRouter();
   useEffect(() => {
-    const token = window.localStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-      return;
-    }
-    axios
-      .get(`${BACKEND_URL}/verify`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        if (response.data.status === "error") {
+    (async () => {
+      try {
+        const resp = await getApi("/member/");
+        if (resp.status === "success") {
+          if (pathname === "/login") {
+            router.push("/home");
+          }
+        }
+      } catch (e) {
+        if (pathname !== "/login") {
           router.push("/login");
         }
-      })
-      .catch((error) => {
-        console.log("ㅇㅕ긴가요?");
-        console.error(error);
-        router.push("/login");
-      });
+      }
+    })();
   }, []);
   return <>{children}</>;
 };

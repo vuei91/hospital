@@ -5,6 +5,8 @@ import { BACKEND_URL } from "@/app/_constants";
 function getBaseAxios() {
   return axios.create({
     baseURL: BACKEND_URL,
+    withCredentials: true,
+    credentials: "same-origin",
     headers: {
       Authorization: `Bearer ${window?.localStorage?.getItem("token")}`,
     },
