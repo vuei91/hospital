@@ -37,3 +37,16 @@ const setOrder = (x) => {
       return -1;
   }
 };
+
+export const getDoctors = (hospital) => {
+  const doctors = hospital?.["doctors"]?.replace(/, /g, ",")?.split(",");
+  const doctorTotal = doctors
+    ?.map((e) => e.split(" ")?.[1]?.replace("명", "") * 1)
+    ?.reduce((a, b) => a + b);
+  return { doctors, doctorTotal: doctorTotal || 0 };
+};
+
+export const getSubjects = (hospital) => {
+  const subjects = hospital?.["subject"]?.split("|||");
+  return { subjects, subjectsTotal: subjects?.length || 0 };
+};

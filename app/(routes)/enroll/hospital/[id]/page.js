@@ -3,8 +3,11 @@ import { Button, Flex, Table } from "antd";
 import React, { useEffect } from "react";
 import { useParams } from "next/navigation";
 import useHospitalQuery from "@/app/_hooks/useHospitalQuery";
-import { getToday } from "@/app/(routes)/enroll/hospital/[id]/_common";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  getDoctors,
+  getSubjects,
+  getToday,
+} from "@/app/(routes)/enroll/hospital/[id]/_common";
 
 const columns = [
   {
@@ -92,23 +95,20 @@ const DiagnosisInfo = () => {
   const { resp, isSuccess } = useHospitalQuery(params.id);
   if (!isSuccess) return null;
   const hospital = resp.data;
-  const doctors = hospital?.["doctors"]?.replace(/, /g, ",")?.split(",");
-  const total = doctors
-    ?.map((e) => e.split(" ")?.[1]?.replace("명", "") * 1)
-    ?.reduce((a, b) => a + b);
-  const subjects = hospital?.["subject"]?.split("|||");
+  const { doctors, doctorTotal } = getDoctors(hospital);
+  const { subjects, subjectsTotal } = getSubjects(hospital);
   return (
     <div style={{ backgroundColor: "white" }}>
       <div id={"info"}>
         {doctors && doctors.length > 0 ? (
-          <InfoCard title={"전문의 정보"} total={total + "명"}>
+          <InfoCard title={"전문의 정보"} total={doctorTotal + "명"}>
             {doctors.map((doctor, idx) => (
               <Info name={doctor} key={idx} />
             ))}
           </InfoCard>
         ) : null}
         {subjects && subjects.length > 0 ? (
-          <InfoCard title={"진료과목"} total="1개">
+          <InfoCard title={"진료과목"} total={subjectsTotal + "개"}>
             {subjects.map((subject, idx) => (
               <Info name={subject} key={idx} />
             ))}
@@ -129,12 +129,11 @@ const HospitalPlace = ({ address, latitude, longitude }) => {
       center: new naver.maps.LatLng(latitude, longitude),
       zoom: 15,
     });
-    var marker = new naver.maps.Marker({
+    new naver.maps.Marker({
       position: new naver.maps.LatLng(latitude, longitude),
       map: map,
     });
   }, []);
-
   return (
     <div style={{ margin: 20 }}>
       <strong style={{ fontSize: 16 }}>병원위치</strong>
