@@ -3,7 +3,8 @@ import React from "react";
 import TopNav from "@/app/_components/TopNav";
 import BottomTwoButton from "@/app/_components/BottomTwoButton";
 import { Avatar, Flex, Menu } from "antd";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import useHospitalQuery from "@/app/_hooks/useHospitalQuery";
 
 const HospitalLayout = ({ children }) => {
   const router = useRouter();
@@ -27,21 +28,25 @@ const HospitalLayout = ({ children }) => {
   );
 };
 
-const HospitalInfo = () => (
-  <Flex align="center">
-    <Avatar
-      style={{ backgroundColor: "white", margin: "10px 20px 10px 10px" }}
-      size="large"
-      icon={"🏥"}
-    />
-    <div style={{ lineHeight: 1.6 }}>
-      <strong style={{ fontSize: 16 }}>무지개요양병원</strong>
-      <div style={{ fontSize: 12, color: "#777777" }}>
-        고양시 일산동구 덕이동
+const HospitalInfo = () => {
+  const params = useParams();
+  const { resp, isSuccess } = useHospitalQuery(params.id);
+  if (!isSuccess) return null;
+  const hospital = resp.data;
+  return (
+    <Flex align="center">
+      <Avatar
+        style={{ backgroundColor: "white", margin: "10px 20px 10px 10px" }}
+        size="large"
+        icon={"🏥"}
+      />
+      <div style={{ lineHeight: 1.6 }}>
+        <strong style={{ fontSize: 16 }}>{hospital.name}</strong>
+        <div style={{ fontSize: 12, color: "#777777" }}>{hospital.address}</div>
       </div>
-    </div>
-  </Flex>
-);
+    </Flex>
+  );
+};
 
 const DiagnosisMenu = () => (
   <Menu
@@ -50,6 +55,7 @@ const DiagnosisMenu = () => (
     style={{
       backgroundColor: "#F7F9FC",
       height: 40,
+      zIndex: 2,
     }}
     items={[
       {

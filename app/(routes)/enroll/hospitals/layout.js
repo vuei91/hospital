@@ -2,7 +2,7 @@
 import React from "react";
 import TopNav from "@/app/_components/TopNav";
 import { Flex, Menu, Select } from "antd";
-import useHospitalQuery from "@/app/_hooks/useHospitalQuery";
+import useHospitalsQuery from "@/app/_hooks/useHospitalsQuery";
 
 const HospitalsLayout = ({ children }) => {
   return (
@@ -15,7 +15,7 @@ const HospitalsLayout = ({ children }) => {
 };
 
 const HospitalsNav = () => {
-  const { resp, isSuccess } = useHospitalQuery();
+  const { resp, isSuccess } = useHospitalsQuery();
   if (!isSuccess) return null;
   return (
     <div

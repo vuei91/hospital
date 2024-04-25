@@ -5,7 +5,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { BACKEND_URL } from "@/app/_constants";
-import useHospitalQuery from "@/app/_hooks/useHospitalQuery";
+import useHospitalsQuery from "@/app/_hooks/useHospitalsQuery";
 
 const hospitals = [
   {
@@ -91,24 +91,9 @@ const hospitals = [
 
 const Hospitals = () => {
   const router = useRouter();
-  const { resp, isSuccess } = useHospitalQuery();
+  const { resp, isSuccess } = useHospitalsQuery();
   if (!isSuccess) return null;
   const hospitals = resp.data;
-  // const { isLoading, data, error } = useQuery({
-  //   queryKey: ["hospitals"],
-  //   queryFn: (e) =>
-  //     axios.get(`${BACKEND_URL}/hospital/`, {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //       },
-  //     }),
-  // });
-  // if (isLoading && !data) return null;
-  // if (error?.response?.status === 401) {
-  //   router.push("/login");
-  //   return null;
-  // }
-  // const hospitals = data.data.data;
   return (
     <Flex
       vertical
@@ -127,7 +112,7 @@ const Hospitals = () => {
           dist={"27km"}
           addr={item.address}
           review={"12"}
-          url={item.url}
+          url={"/enroll/hospital/" + item.id}
         />
       ))}
     </Flex>
