@@ -62,16 +62,41 @@ const DiagnosisMenu = () => (
         key: 1,
         label: "진료시간",
         style: { flexGrow: 1, textAlign: "center" },
+        onClick: () => {
+          const info = document.querySelector(
+            "div.hospital-container > div:nth-child(1)",
+          );
+          document.querySelector(".hospital-container").scrollTo(0, 0);
+        },
       },
       {
         key: 2,
         label: "진료정보",
         style: { flexGrow: 1, textAlign: "center" },
+        onClick: () => {
+          const info = document.querySelector(
+            "div.hospital-container > div:nth-child(1)",
+          );
+          document
+            .querySelector(".hospital-container")
+            .scrollTo(0, info.scrollHeight);
+        },
       },
       {
         key: 3,
         label: "병원위치",
         style: { flexGrow: 1, textAlign: "center" },
+        onClick: () => {
+          const info = document.querySelector(
+            "div.hospital-container > div:nth-child(1)",
+          );
+          const info2 = document.querySelector(
+            "div.hospital-container > div:nth-child(2)",
+          );
+          document
+            .querySelector(".hospital-container")
+            .scrollTo(0, info.scrollHeight + info2.scrollHeight);
+        },
       },
     ]}
   ></Menu>
