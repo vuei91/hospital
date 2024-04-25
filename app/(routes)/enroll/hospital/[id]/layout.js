@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TopNav from "@/app/_components/TopNav";
 import BottomTwoButton from "@/app/_components/BottomTwoButton";
 import { Avatar, Flex, Menu } from "antd";
@@ -48,58 +48,84 @@ const HospitalInfo = () => {
   );
 };
 
-const DiagnosisMenu = () => (
-  <Menu
-    mode="horizontal"
-    defaultSelectedKeys={["1"]}
-    style={{
-      backgroundColor: "#F7F9FC",
-      height: 40,
-      zIndex: 2,
-    }}
-    items={[
-      {
-        key: 1,
-        label: "진료시간",
-        style: { flexGrow: 1, textAlign: "center" },
-        onClick: () => {
-          const info = document.querySelector(
-            "div.hospital-container > div:nth-child(1)",
-          );
-          document.querySelector(".hospital-container").scrollTo(0, 0);
+const DiagnosisMenu = () => {
+  const [nav, setNav] = useState("time");
+  const [scroll, setScroll] = useState({});
+  useEffect(() => {
+    const hospitalContainer = document.querySelector(".hospital-container");
+    const scrollHandler = (e) => {
+      const info = document.querySelector(
+        "div.hospital-container > div:nth-child(1)",
+      );
+      const info2 = document.querySelector(
+        "div.hospital-container > div:nth-child(2)",
+      );
+      if (
+        e.target.scrollTop + e.target.offsetHeight + 10 >
+        e.target.scrollHeight
+      ) {
+        setNav("place");
+      } else if (e.target.scrollTop > info.scrollHeight + info2.scrollHeight) {
+        setNav("place");
+      } else if (e.target.scrollTop > info.scrollHeight) {
+        setNav("info");
+      } else {
+        setNav("time");
+      }
+    };
+    hospitalContainer.addEventListener("scroll", scrollHandler);
+    return () => {
+      hospitalContainer.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
+  return (
+    <Menu
+      mode="horizontal"
+      defaultSelectedKeys={["time"]}
+      selectedKeys={[nav]}
+      style={{
+        backgroundColor: "#F7F9FC",
+        height: 40,
+        zIndex: 2,
+      }}
+      items={[
+        {
+          key: "time",
+          label: "진료시간",
+          style: { flexGrow: 1, textAlign: "center" },
+          onClick: () => {
+            document.querySelector(".hospital-container").scrollTo(0, 0);
+          },
         },
-      },
-      {
-        key: 2,
-        label: "진료정보",
-        style: { flexGrow: 1, textAlign: "center" },
-        onClick: () => {
-          const info = document.querySelector(
-            "div.hospital-container > div:nth-child(1)",
-          );
-          document
-            .querySelector(".hospital-container")
-            .scrollTo(0, info.scrollHeight);
+        {
+          key: "info",
+          label: "진료정보",
+          style: { flexGrow: 1, textAlign: "center" },
+          onClick: () => {
+            const info = document.querySelector(
+              "div.hospital-container > div:nth-child(1)",
+            );
+            document
+              .querySelector(".hospital-container")
+              .scrollTo(0, info.scrollHeight + 1);
+          },
         },
-      },
-      {
-        key: 3,
-        label: "병원위치",
-        style: { flexGrow: 1, textAlign: "center" },
-        onClick: () => {
-          const info = document.querySelector(
-            "div.hospital-container > div:nth-child(1)",
-          );
-          const info2 = document.querySelector(
-            "div.hospital-container > div:nth-child(2)",
-          );
-          document
-            .querySelector(".hospital-container")
-            .scrollTo(0, info.scrollHeight + info2.scrollHeight);
+        {
+          key: "place",
+          label: "병원위치",
+          style: { flexGrow: 1, textAlign: "center" },
+          onClick: () => {
+            const hospitalContainer = document.querySelector(
+              ".hospital-container",
+            );
+            document
+              .querySelector(".hospital-container")
+              .scrollTo(0, hospitalContainer.scrollHeight);
+          },
         },
-      },
-    ]}
-  ></Menu>
-);
+      ]}
+    />
+  );
+};
 
 export default HospitalLayout;

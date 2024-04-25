@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useParams } from "next/navigation";
 import useHospitalQuery from "@/app/_hooks/useHospitalQuery";
 import {
+  getConvenience,
   getDoctors,
   getSubjects,
   getToday,
@@ -36,6 +37,7 @@ const Hospital = () => {
         address={hospital?.address}
         latitude={hospital?.latitude}
         longitude={hospital?.longitude}
+        parking={hospital?.parking}
       />
     </>
   );
@@ -97,6 +99,7 @@ const DiagnosisInfo = () => {
   const hospital = resp.data;
   const { doctors, doctorTotal } = getDoctors(hospital);
   const { subjects, subjectsTotal } = getSubjects(hospital);
+  const { conveniences, convenienceTotal } = getConvenience(hospital);
   return (
     <div style={{ backgroundColor: "white" }}>
       <div id={"info"}>
@@ -114,16 +117,19 @@ const DiagnosisInfo = () => {
             ))}
           </InfoCard>
         ) : null}
-        {/*<InfoCard title={"의료장비"} total="2개">*/}
-        {/*  <Info name="초음파영상 진단기" />*/}
-        {/*  <Info name="고밀도 검사기" />*/}
-        {/*</InfoCard>*/}
+        {conveniences && conveniences.length > 0 ? (
+          <InfoCard title={"편의시설"} total={convenienceTotal + "개"}>
+            {conveniences.map((convenience, idx) => (
+              <Info name={convenience} key={idx} />
+            ))}
+          </InfoCard>
+        ) : null}
       </div>
     </div>
   );
 };
 
-const HospitalPlace = ({ address, latitude, longitude }) => {
+const HospitalPlace = ({ address, latitude, longitude, parking }) => {
   useEffect(() => {
     const map = new window.naver.maps.Map("map", {
       center: new naver.maps.LatLng(latitude, longitude),
@@ -134,6 +140,13 @@ const HospitalPlace = ({ address, latitude, longitude }) => {
       map: map,
     });
   }, []);
+  const getParking = (parking) => {
+    let list = parking.split("\n");
+    if (list.length > 1) {
+      return list[0] + `(${list[1]})`;
+    }
+    return parking;
+  };
   return (
     <div style={{ margin: 20 }}>
       <strong style={{ fontSize: 16 }}>병원위치</strong>
@@ -161,10 +174,14 @@ const HospitalPlace = ({ address, latitude, longitude }) => {
           marginRight: "auto",
         }}
       ></div>
-      <div style={{ lineHeight: 1.6, margin: "20px 0" }}>
-        <strong style={{ fontSize: 16 }}>주차정보</strong>
-        <div style={{ fontSize: 12, color: "#777777" }}>주차가능(유료)</div>
-      </div>
+      {parking ? (
+        <div style={{ lineHeight: 1.6, margin: "20px 0" }}>
+          <strong style={{ fontSize: 16 }}>주차정보</strong>
+          <div style={{ fontSize: 12, color: "#777777" }}>
+            {getParking(parking)}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -24,6 +24,7 @@ const LoginLayout = ({ children }) => {
         }
       })
       .catch((error) => {
+        console.log("ㅇㅕ긴가요?");
         console.error(error);
         router.push("/login");
       });

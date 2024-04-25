@@ -50,3 +50,8 @@ export const getSubjects = (hospital) => {
   const subjects = hospital?.["subject"]?.split("|||");
   return { subjects, subjectsTotal: subjects?.length || 0 };
 };
+
+export const getConvenience = (hospital) => {
+  const conveniences = hospital?.["convenience"]?.split("|||");
+  return { conveniences, convenienceTotal: conveniences?.length || 0 };
+};
