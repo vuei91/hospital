@@ -91,8 +91,9 @@ const hospitals = [
 
 const Hospitals = () => {
   const router = useRouter();
-  const { data: resp } = useHospitalQuery(localStorage.getItem("token"));
-  const hospitals = resp?.data || [];
+  const { resp, isSuccess } = useHospitalQuery();
+  if (!isSuccess) return null;
+  const hospitals = resp.data;
   // const { isLoading, data, error } = useQuery({
   //   queryKey: ["hospitals"],
   //   queryFn: (e) =>

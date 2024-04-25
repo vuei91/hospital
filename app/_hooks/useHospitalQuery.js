@@ -1,15 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { getApi } from "@/app/_hooks/api";
 
-const getApi = async (token) => {
-  const resp = await axios.get("http://localhost:8080/hospital/", {
-    headers: { Authorization: `Bearer ${token}` },
+const useHospitalQuery = () => {
+  const {
+    data: resp,
+    isError,
+    isLoading,
+    isSuccess,
+  } = useQuery({
+    queryKey: ["hospital"],
+    queryFn: () => getApi("hospital/"),
   });
-  return resp.data;
-};
-
-const useHospitalQuery = (token) => {
-  return useQuery({ queryKey: ["hospital"], queryFn: () => getApi(token) });
+  return { resp, isError, isLoading, isSuccess };
 };
 
 export default useHospitalQuery;

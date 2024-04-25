@@ -15,7 +15,8 @@ const HospitalsLayout = ({ children }) => {
 };
 
 const HospitalsNav = () => {
-  const { data: resp } = useHospitalQuery(localStorage.getItem("token"));
+  const { resp, isSuccess } = useHospitalQuery();
+  if (!isSuccess) return null;
   return (
     <div
       style={{
@@ -32,7 +33,7 @@ const HospitalsNav = () => {
           mode="horizontal"
           defaultSelectedKeys={["1"]}
           items={[
-            { key: 1, label: `요양병원(${resp?.data?.length || 0})` },
+            { key: 1, label: `요양병원(${resp.data.length})` },
             { key: 2, label: "요양원(12)" },
           ]}
           style={{
