@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { BACKEND_URL } from "@/app/_constants";
+import { useQuery } from "@tanstack/react-query";
 
 function getBaseAxios() {
   return axios.create({
@@ -28,3 +29,16 @@ export async function putApi(url, params) {
 export async function deleteApi(url) {
   return (await getBaseAxios().delete(url)).data;
 }
+
+export const useCommonQuery = (key, url, params) => {
+  const {
+    data: resp,
+    isError,
+    isLoading,
+    isSuccess,
+  } = useQuery({
+    queryKey: key,
+    queryFn: () => getApi(url, params),
+  });
+  return { resp, isError, isLoading, isSuccess };
+};
