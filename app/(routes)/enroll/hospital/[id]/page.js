@@ -2,7 +2,7 @@
 import { Button, Flex, Table } from "antd";
 import React, { useEffect } from "react";
 import { useParams } from "next/navigation";
-import useHospitalQuery from "@/app/_hooks/useHospitalQuery";
+import { useHospitalQuery } from "@/app/_hooks/useHospitalQuery";
 import {
   getConvenience,
   getDoctors,

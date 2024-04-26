@@ -2,10 +2,7 @@
 import { Card, Flex } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { BACKEND_URL } from "@/app/_constants";
-import useHospitalsQuery from "@/app/_hooks/useHospitalsQuery";
+import { useHospitalsQuery } from "@/app/_hooks/useHospitalQuery";
 import hospitalStore from "@/app/_service/hospitalStore";
 
 const Hospitals = () => {

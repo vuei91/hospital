@@ -2,7 +2,7 @@
 import React from "react";
 import TopNav from "@/app/_components/TopNav";
 import { Flex, Menu, Select } from "antd";
-import useHospitalsQuery from "@/app/_hooks/useHospitalsQuery";
+import { useHospitalsQuery } from "@/app/_hooks/useHospitalQuery";
 
 const HospitalsLayout = ({ children }) => {
   return (
