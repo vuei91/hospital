@@ -9,8 +9,8 @@ const usePatientMutation = () => {
     },
   });
 
-  const createPatient = (params) => {
-    return mutate(params);
+  const createPatient = (params, options) => {
+    return mutate(params, options);
   };
 
   return { data, createPatient };

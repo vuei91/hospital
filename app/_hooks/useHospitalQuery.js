@@ -1,17 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import { getApi } from "@/app/_hooks/api";
+import { useCommonQuery } from "@/app/_hooks/api";
 
-const useHospitalQuery = (id) => {
-  const {
-    data: resp,
-    isError,
-    isLoading,
-    isSuccess,
-  } = useQuery({
-    queryKey: ["hospital", id],
-    queryFn: () => getApi(`hospital/${id}`),
-  });
-  return { resp, isError, isLoading, isSuccess };
+export const useHospitalQuery = (id) => {
+  return useCommonQuery(["hospital", id], `hospital/${id}`);
 };
 
-export default useHospitalQuery;
+export const useHospitalsQuery = () => {
+  return useCommonQuery(["hospitals"], "hospital/list");
+};
+
+export default useHospitalsQuery;
