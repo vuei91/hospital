@@ -7,6 +7,7 @@ const patientInfoStore = create((set) => ({
   setName: (name) => set({ name }),
   setGrade: (grade) => set({ grade }),
   setPhone: (phone) => set({ phone }),
+  clear: () => set({ name: null, grade: null, phone: null }),
 }));
 
 export default patientInfoStore;
