@@ -1,8 +1,14 @@
 "use client";
 import { Button, Flex } from "antd";
 import React from "react";
+import useMemberQuery from "@/app/_hooks/useMemberQuery";
+import { useRouter } from "next/navigation";
 
 const mypage = () => {
+  const router = useRouter();
+  const { resp, isSuccess } = useMemberQuery();
+  if (!isSuccess) return null;
+  const member = resp?.data;
   return (
     <>
       <style jsx>{`
@@ -22,21 +28,23 @@ const mypage = () => {
               marginRight: 10,
             }}
           ></div>
-          <div>카카오로그인</div>
+          <div>
+            {member?.["type"] === "naver" ? "네이버로그인" : "카카오로그인"}
+          </div>
         </Flex>
         <table style={{ marginTop: 20 }}>
           <tbody>
             <tr>
               <th>이름</th>
-              <td>유재석</td>
+              <td>{member?.["name"]}</td>
             </tr>
             <tr>
               <th>휴대폰번호</th>
-              <td>010-1234-1234</td>
+              <td>{member?.["phone"]}</td>
             </tr>
             <tr>
               <th>이메일</th>
-              <td>asd@naver.com</td>
+              <td>{member?.["email"]}</td>
             </tr>
           </tbody>
         </table>
@@ -44,7 +52,7 @@ const mypage = () => {
           <Button block style={{ height: 56 }}>
             <Flex align="center" justify="space-between">
               <div>문의사항 보내기</div>
-              <div>abcde@naver.com</div>
+              <div>wkwk2805@gmail.com</div>
             </Flex>
           </Button>
         </div>
@@ -57,7 +65,14 @@ const mypage = () => {
           width: "calc(100% - 40px)",
         }}
       >
-        <Button block style={{ height: 48 }}>
+        <Button
+          block
+          style={{ height: 48 }}
+          onClick={() => {
+            localStorage.removeItem("token");
+            router.push("/");
+          }}
+        >
           로그아웃
         </Button>
         <div style={{ height: 10 }}></div>
