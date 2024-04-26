@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { Steps } from "antd-mobile";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { RightOutlined } from "@ant-design/icons";
 import { Button, Flex } from "antd";
 import { StepTag } from "@/app/(routes)/history/_components/Tags";
+import { useEnrollByHospitalAndPatientQuery } from "@/app/_hooks/useEnrollQuery";
 
 const HistoryDetail = () => {
   return (
@@ -17,6 +18,13 @@ const HistoryDetail = () => {
 };
 
 const FirstInfo = () => {
+  const { hospitalId, patientId } = useParams();
+  const { resp, isSuccess } = useEnrollByHospitalAndPatientQuery(
+    hospitalId,
+    patientId,
+  );
+  if (!isSuccess) return null;
+  const enroll = resp?.data;
   return (
     <Flex
       vertical
@@ -31,11 +39,11 @@ const FirstInfo = () => {
     >
       <Flex justify="space-between" style={{ padding: "0 20px 10px 20px" }}>
         <div style={{ fontSize: 16 }}>신청인</div>
-        <strong style={{ fontSize: 16 }}>김무제</strong>
+        <strong style={{ fontSize: 16 }}>{enroll?.["memberName"]}</strong>
       </Flex>
       <Flex justify="space-between" style={{ padding: "10px 20px 0 20px" }}>
         <div style={{ fontSize: 16 }}>환자명</div>
-        <strong style={{ fontSize: 16 }}>김요양</strong>
+        <strong style={{ fontSize: 16 }}>{enroll?.["patientName"]}</strong>
       </Flex>
     </Flex>
   );
@@ -43,7 +51,13 @@ const FirstInfo = () => {
 
 const SecondInfo = () => {
   const router = useRouter();
-
+  const { hospitalId, patientId } = useParams();
+  const { resp, isSuccess } = useEnrollByHospitalAndPatientQuery(
+    hospitalId,
+    patientId,
+  );
+  if (!isSuccess) return null;
+  const enroll = resp?.data;
   return (
     <Flex vertical justify={"center"} style={{ width: "100%", height: 120 }}>
       <div style={{ padding: 20 }}>
@@ -60,7 +74,7 @@ const SecondInfo = () => {
         <Button
           block
           size={"large"}
-          onClick={() => router.push("/history/progress")}
+          onClick={() => router.push(`/history/progress/${patientId}`)}
         >
           진행현황 한눈에 보기
         </Button>
@@ -71,6 +85,27 @@ const SecondInfo = () => {
 
 const ThirdInfo = () => {
   const router = useRouter();
+  const { hospitalId, patientId } = useParams();
+  const { resp, isSuccess } = useEnrollByHospitalAndPatientQuery(
+    hospitalId,
+    patientId,
+  );
+  if (!isSuccess) return null;
+  const getStatus = (status) => {
+    switch (status) {
+      case "ENROLL":
+        return { step: 0, text: "대기중" };
+      case "CALL":
+        return { step: 1, text: "연락중" };
+      case "CONTRACT":
+        return { step: 2, text: "계약중" };
+      case "COMPLETE":
+        return { step: 3, text: "완료" };
+      case "CANCEL":
+        return { step: 4, text: "취소" };
+    }
+  };
+  const enroll = resp?.data;
   return (
     <div
       style={{
@@ -82,16 +117,20 @@ const ThirdInfo = () => {
     >
       <div style={{ padding: 20 }}>
         <NumberDesign number={1} />
-        <strong style={{ fontSize: 16, lineHeight: 2 }}>무지개 요양병원</strong>
+        <strong style={{ fontSize: 16, lineHeight: 2 }}>
+          {enroll?.["hospitalName"]}
+        </strong>
         <div style={{ fontSize: 14, color: "#717375" }}>
-          경기도 고양시 덕약구 원당로59번길 23
+          {enroll?.["hospitalAddress"]}
         </div>
         <div style={{ paddingTop: 10 }}>
-          <StepTag text={"2단계"} />
+          <StepTag
+            text={`${getStatus(enroll?.["enrollStatus"])?.step + 1}단계`}
+          />
         </div>
       </div>
       <div>
-        <Steps current={1}>
+        <Steps current={getStatus(enroll?.["enrollStatus"])?.step}>
           <Steps.Step title="1단계" />
           <Steps.Step title="2단계" />
           <Steps.Step title="3단계" />
@@ -107,11 +146,13 @@ const ThirdInfo = () => {
       >
         <Flex justify="space-between" style={{ padding: "0 20px 10px 20px" }}>
           <div style={{ color: "#717375", fontSize: 16 }}>진행현황</div>
-          <strong style={{ fontSize: 16 }}>대기중</strong>
+          <strong style={{ fontSize: 16 }}>
+            {getStatus(enroll?.["enrollStatus"])?.text}
+          </strong>
         </Flex>
         <Flex justify="space-between" style={{ padding: "10px 20px 0 20px" }}>
           <div style={{ color: "#717375", fontSize: 16 }}>병원정보</div>
-          <div onClick={() => router.push("/history/hospital")}>
+          <div onClick={() => router.push(`/history/hospital/${hospitalId}`)}>
             <strong style={{ fontSize: 16 }}>자세히보기</strong>
             &nbsp;
             <RightOutlined size={14} color={"#717375"} />

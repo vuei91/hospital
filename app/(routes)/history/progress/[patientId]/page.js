@@ -2,39 +2,54 @@
 import React from "react";
 import { Flex, List } from "antd";
 import { DayTag } from "@/app/(routes)/history/_components/Tags";
+import { useEnrollsByPatientQuery } from "@/app/_hooks/useEnrollQuery";
+import { useParams } from "next/navigation";
 
 const data = [
   {
     day: "1-2일 소요",
+    status: "ENROLL",
     step: "1단계",
     content: "의료기관 연락 중",
-    hospitals: ["무지개 요양병원", "차연 요양병원"],
-    active: true,
   },
   {
     day: "1일 소요 예상",
+    status: "CALL",
     step: "2단계",
     content: "의료기관에서 고객님께 연락 예정",
-    hospitals: ["무지개 요양병원", "차연 요양병원"],
-    active: false,
   },
   {
     day: "1일 소요 예상",
     step: "3단계",
+    status: "CONTRACT",
     content: "의료기관과 계약 진행",
-    hospitals: ["무지개 요양병원", "차연 요양병원"],
-    active: false,
   },
   {
     day: "최종 단계",
     step: "4단계",
+    status: "COMPLETE",
     content: "서비스 수수료 입금 필요",
-    hospitals: ["무지개 요양병원", "차연 요양병원"],
-    active: false,
   },
 ];
 
 const HistoryProgress = () => {
+  const { patientId } = useParams();
+  console.log(patientId);
+  const { resp, isSuccess } = useEnrollsByPatientQuery(patientId);
+  if (!isSuccess) return null;
+  const enrolls = resp?.data;
+  const getHospitalsFromStatus = (enrolls) => {
+    const result = {};
+    for (const enroll of enrolls) {
+      if (!result[enroll?.["enrollStatus"]]) {
+        result[enroll?.["enrollStatus"]] = [];
+      }
+      result[enroll?.["enrollStatus"]].push(enroll?.["hospitalName"]);
+    }
+    console.log(result);
+    return result;
+  };
+  const status = getHospitalsFromStatus(enrolls);
   return (
     <div style={{ backgroundColor: "white" }}>
       <List
@@ -46,8 +61,8 @@ const HistoryProgress = () => {
               day={item.day}
               step={item.step}
               content={item.content}
-              hospitals={item.hospitals}
-              active={item.active}
+              hospitals={status?.[item.status] || []}
+              active={status?.[item.status] || false}
             />
           </List.Item>
         )}

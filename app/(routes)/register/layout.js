@@ -9,8 +9,8 @@ import { useRouter } from "next/navigation";
 
 const Layout = ({ children }) => {
   const router = useRouter();
-  const { name, phone, grade } = patientInfoStore((state) => state);
-  const { createPatient } = usePatientMutation();
+  const { name, phone, grade, clear } = patientInfoStore((state) => state);
+  const { createPatient, data } = usePatientMutation();
   return (
     <>
       <TopNav title={"환자정보입력"} isBack />
@@ -19,8 +19,22 @@ const Layout = ({ children }) => {
         text={"등록"}
         onClick={async () => {
           if (name && phone && grade) {
-            await createPatient({ name, phone, grade });
-            router.push("/enroll/choice-patient");
+            await createPatient(
+              { name, phone, grade },
+              {
+                onSuccess: (data) => {
+                  if (data?.status === "success") {
+                    router.push("/enroll/choice-patient");
+                    clear();
+                  } else {
+                    Modal.alert({
+                      content: "휴대폰 번호를 다시 입력해주세요",
+                      confirmText: "확인",
+                    });
+                  }
+                },
+              },
+            );
           } else {
             Modal.alert({ content: "모두 입력해주세요", confirmText: "확인" });
           }

@@ -4,15 +4,19 @@ import { Button, Checkbox, Collapse } from "antd";
 import useMemberQuery from "@/app/_hooks/useMemberQuery";
 import enrollStore from "@/app/_service/enrollStore";
 import hospitalStore from "@/app/_service/hospitalStore";
-// 만약 등록된 환자가 없으면, 등록화면으로 보여주기
-// 등록된 환자가 있으면 체크박스 보여주기
+import { useEnrollsByHospitalQuery } from "@/app/_hooks/useEnrollQuery";
 const ChoicePatient = () => {
+  const { hospitalId } = hospitalStore((state) => state);
   const { setPatientIds } = enrollStore((state) => state);
   const { resp, isSuccess } = useMemberQuery();
+  const { resp: enrollResp, isSuccess: enrollIsSuccess } =
+    useEnrollsByHospitalQuery(hospitalId);
   const [keys, setKeys] = useState([]);
   if (!isSuccess) return null;
+  if (!enrollIsSuccess) return null;
   const member = resp.data;
   const patients = member?.["patients"];
+  const patientIds = enrollResp?.data?.map((e) => e?.["patientId"]);
   const onChange = (e) => {
     if (e.target.checked) {
       const k = keys.concat(e.target.value);
@@ -31,60 +35,41 @@ const ChoicePatient = () => {
       activeKey={keys}
       size="small"
       style={{ borderRadius: 0, backgroundColor: "inherit" }}
-      items={
-        patients.map((patient) => ({
-          key: patient.id,
-          label: (
-            <Checkbox
-              onChange={onChange}
-              value={patient.id}
-              style={{ width: "100%", padding: 20 }}
-            >
-              {patient.name}
-            </Checkbox>
-          ),
-          children: (
-            <PatientDetail
-              memberName={member.name || member.username}
-              address={patient.address}
-              grade={patient.grade}
-            />
-          ),
-          showArrow: false,
-          headerClass: "header",
-        }))
-        // [
-        //   {
-        //     key: 1,
-        //     label: (
-        //       <Checkbox
-        //         onChange={onChange}
-        //         value={1}
-        //         style={{ width: "100%", padding: 20 }}
-        //       >
-        //         {"김요양"}
-        //       </Checkbox>
-        //     ),
-        //     children: <PatientDetail />,
-        //     showArrow: false,
-        //     headerClass: "header",
-        //   },
-        //   {
-        //     key: 2,
-        //     label: (
-        //       <Checkbox
-        //         onChange={onChange}
-        //         value={2}
-        //         style={{ width: "100%", padding: 20 }}
-        //       >
-        //         {"김무제"}
-        //       </Checkbox>
-        //     ),
-        //     children: <PatientDetail />,
-        //     showArrow: false,
-        //   },
-        // ]
-      }
+      items={patients.map((patient) => ({
+        key: patient.id,
+        label: (
+          <Checkbox
+            disabled={patientIds?.includes(patient.id) || false}
+            onChange={onChange}
+            value={patient.id}
+            style={{ width: "100%", padding: 20 }}
+          >
+            {patient.name}
+            {patientIds?.includes(patient.id) || false ? (
+              <span
+                style={{
+                  borderRadius: 4,
+                  backgroundColor: "#BBBBBB",
+                  padding: 5,
+                  color: "white",
+                  marginLeft: 20,
+                }}
+              >
+                이미 신청되었습니다
+              </span>
+            ) : null}
+          </Checkbox>
+        ),
+        children: (
+          <PatientDetail
+            memberName={member.name || member.username}
+            address={patient.address}
+            grade={patient.grade}
+          />
+        ),
+        showArrow: false,
+        headerClass: "header",
+      }))}
     />
   );
 };
