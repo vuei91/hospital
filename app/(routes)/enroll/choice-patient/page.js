@@ -1,15 +1,27 @@
 "use client";
 import React, { useState } from "react";
 import { Button, Checkbox, Collapse } from "antd";
+import useMemberQuery from "@/app/_hooks/useMemberQuery";
+import enrollStore from "@/app/_service/enrollStore";
+import hospitalStore from "@/app/_service/hospitalStore";
 // 만약 등록된 환자가 없으면, 등록화면으로 보여주기
 // 등록된 환자가 있으면 체크박스 보여주기
 const ChoicePatient = () => {
+  const { setPatientIds } = enrollStore((state) => state);
+  const { resp, isSuccess } = useMemberQuery();
   const [keys, setKeys] = useState([]);
+  if (!isSuccess) return null;
+  const member = resp.data;
+  const patients = member?.["patients"];
   const onChange = (e) => {
     if (e.target.checked) {
-      setKeys(keys.concat(e.target.value));
+      const k = keys.concat(e.target.value);
+      setKeys(k);
+      setPatientIds(k);
     } else {
-      setKeys(keys.filter((elem) => elem !== e.target.value));
+      const k = keys.filter((elem) => elem !== e.target.value);
+      setKeys(k);
+      setPatientIds(k);
     }
   };
   return (
@@ -19,42 +31,65 @@ const ChoicePatient = () => {
       activeKey={keys}
       size="small"
       style={{ borderRadius: 0, backgroundColor: "inherit" }}
-      items={[
-        {
-          key: 1,
+      items={
+        patients.map((patient) => ({
+          key: patient.id,
           label: (
             <Checkbox
               onChange={onChange}
-              value={1}
+              value={patient.id}
               style={{ width: "100%", padding: 20 }}
             >
-              {"김요양"}
+              {patient.name}
             </Checkbox>
           ),
-          children: <PatientDetail />,
+          children: (
+            <PatientDetail
+              memberName={member.name || member.username}
+              address={patient.address}
+              grade={patient.grade}
+            />
+          ),
           showArrow: false,
           headerClass: "header",
-        },
-        {
-          key: 2,
-          label: (
-            <Checkbox
-              onChange={onChange}
-              value={2}
-              style={{ width: "100%", padding: 20 }}
-            >
-              {"김무제"}
-            </Checkbox>
-          ),
-          children: <PatientDetail />,
-          showArrow: false,
-        },
-      ]}
+        }))
+        // [
+        //   {
+        //     key: 1,
+        //     label: (
+        //       <Checkbox
+        //         onChange={onChange}
+        //         value={1}
+        //         style={{ width: "100%", padding: 20 }}
+        //       >
+        //         {"김요양"}
+        //       </Checkbox>
+        //     ),
+        //     children: <PatientDetail />,
+        //     showArrow: false,
+        //     headerClass: "header",
+        //   },
+        //   {
+        //     key: 2,
+        //     label: (
+        //       <Checkbox
+        //         onChange={onChange}
+        //         value={2}
+        //         style={{ width: "100%", padding: 20 }}
+        //       >
+        //         {"김무제"}
+        //       </Checkbox>
+        //     ),
+        //     children: <PatientDetail />,
+        //     showArrow: false,
+        //   },
+        // ]
+      }
     />
   );
 };
 
-const PatientDetail = () => {
+const PatientDetail = ({ memberName, grade, address }) => {
   return (
     <>
       <style jsx>{`
@@ -76,25 +111,24 @@ const PatientDetail = () => {
           <col width={"82%"} />
         </colgroup>
         <tbody>
-          <tr>
-            <th>보호자</th>
-            <td>김무제</td>
-          </tr>
-          <tr>
-            <th>장애 종류</th>
-            <td>시각장애</td>
-          </tr>
-          <tr>
-            <th>장애 등급</th>
-            <td>2등급</td>
-          </tr>
-          <tr>
-            <th>주소</th>
-            <td>
-              경기도 고양시 덕양구 59번길 35-14 성산빌라 A동 204호 fdsfa fdas
-              fdas
-            </td>
-          </tr>
+          {memberName && (
+            <tr>
+              <th>보호자</th>
+              <td>{memberName}</td>
+            </tr>
+          )}
+          {grade && (
+            <tr>
+              <th>장애 종류</th>
+              <td>{grade}</td>
+            </tr>
+          )}
+          {address && (
+            <tr>
+              <th>주소</th>
+              <td>{address}</td>
+            </tr>
+          )}
         </tbody>
       </table>
       <Button block size={"large"}>

@@ -1,12 +1,31 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import TopNav from "@/app/_components/TopNav";
 import BottomButton from "@/app/_components/BottomButton";
 import { Modal, Toast } from "antd-mobile";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { getApi } from "@/app/_hooks/api";
+import useEnrollMutation from "@/app/_hooks/useEnrollMutation";
+import enrollStore from "@/app/_service/enrollStore";
+import hospitalStore from "@/app/_service/hospitalStore";
 
 const ChoicePatientLayout = ({ children }) => {
   const router = useRouter();
+  const { patientIds } = enrollStore((state) => state);
+  const { hospitalId } = hospitalStore((state) => state);
+  const { createEnroll } = useEnrollMutation();
+  useEffect(() => {
+    (async () => {
+      const { data } = await getApi("/member/");
+      if (data?.["patients"]?.length === 0) {
+        router.push("/register");
+      }
+      if (!hospitalId) {
+        router.push("/");
+      }
+    })();
+  }, []);
   const enroll = () => {
     Modal.show({
       content: "신청 하시겠습니까?",
@@ -16,13 +35,22 @@ const ChoicePatientLayout = ({ children }) => {
           key: "Yes",
           text: "네",
           primary: true,
-          onClick() {
-            Toast.show({
-              icon: "success",
-              content: "신청완료",
-              position: "bottom",
-            });
-            router.push("/");
+          async onClick() {
+            if (patientIds && hospitalId && patientIds.length > 0) {
+              await createEnroll({ patientIds, hospitalId });
+              Toast.show({
+                icon: "success",
+                content: "신청완료",
+                position: "bottom",
+              });
+              router.push("/history/main");
+            } else {
+              Toast.show({
+                icon: "error",
+                content: "환자를 선택해주세요",
+                position: "bottom",
+              });
+            }
           },
         },
         {

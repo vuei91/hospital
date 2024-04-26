@@ -5,11 +5,34 @@ import BottomTwoButton from "@/app/_components/BottomTwoButton";
 import { Avatar, Flex, Menu } from "antd";
 import { useParams, useRouter } from "next/navigation";
 import useHospitalQuery from "@/app/_hooks/useHospitalQuery";
+import { useQuery } from "@tanstack/react-query";
+import useMemberQuery from "@/app/_hooks/useMemberQuery";
+import { Modal } from "antd-mobile";
+import hospitalStore from "@/app/_service/hospitalStore";
 
 const HospitalLayout = ({ children }) => {
+  const { id } = useParams();
   const router = useRouter();
-  const move = () => {
-    router.push("/enroll/choice-patient");
+  const { resp, isSuccess } = useMemberQuery();
+  const { hospitalId } = hospitalStore((state) => state);
+  if (!isSuccess) return null;
+  const member = resp.data;
+  if (id * 1 !== hospitalId) {
+    router.push("/home");
+    return null;
+  }
+  const move = async () => {
+    if (member?.["patients"]?.length === 0) {
+      await Modal.alert({
+        content: "환자 먼저 등록이 필요합니다",
+        confirmText: "확인",
+        onConfirm: () => {
+          router.push("/register");
+        },
+      });
+    } else {
+      router.push("/enroll/choice-patient");
+    }
   };
   return (
     <>
