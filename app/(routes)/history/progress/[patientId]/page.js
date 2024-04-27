@@ -34,7 +34,6 @@ const data = [
 
 const HistoryProgress = () => {
   const { patientId } = useParams();
-  console.log(patientId);
   const { resp, isSuccess } = useEnrollsByPatientQuery(patientId);
   if (!isSuccess) return null;
   const enrolls = resp?.data;
@@ -46,7 +45,6 @@ const HistoryProgress = () => {
       }
       result[enroll?.["enrollStatus"]].push(enroll?.["hospitalName"]);
     }
-    console.log(result);
     return result;
   };
   const status = getHospitalsFromStatus(enrolls);
