@@ -9,8 +9,8 @@ const useEnrollMutation = () => {
     },
   });
 
-  const createEnroll = (params) => {
-    return mutate(params);
+  const createEnroll = (params, option) => {
+    return mutate(params, option);
   };
 
   return { data, createEnroll };

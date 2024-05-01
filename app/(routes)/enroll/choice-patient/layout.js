@@ -4,7 +4,6 @@ import TopNav from "@/app/_components/TopNav";
 import BottomButton from "@/app/_components/BottomButton";
 import { Modal, Toast } from "antd-mobile";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { getApi } from "@/app/_hooks/api";
 import useEnrollMutation from "@/app/_hooks/useEnrollMutation";
 import enrollStore from "@/app/_service/enrollStore";
@@ -37,13 +36,21 @@ const ChoicePatientLayout = ({ children }) => {
           primary: true,
           async onClick() {
             if (patientIds && hospitalId && patientIds.length > 0) {
-              await createEnroll({ patientIds, hospitalId });
-              Toast.show({
-                icon: "success",
-                content: "신청완료",
-                position: "bottom",
-              });
-              router.push("/history/main");
+              await createEnroll(
+                { patientIds, hospitalId },
+                {
+                  onSuccess(data) {
+                    if (data.status === "success") {
+                      Toast.show({
+                        icon: "success",
+                        content: "신청완료",
+                        position: "bottom",
+                      });
+                      router.push("/history/main");
+                    }
+                  },
+                },
+              );
             } else {
               Toast.show({
                 icon: "fail",
