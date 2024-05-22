@@ -33,7 +33,7 @@ const Main = () => {
         />
       </Flex>
       <div style={{ marginTop: 20, marginBottom: 10, flexGrow: 1 }}>
-        <Image src={"./ad.png"} width={"100%"} preview={false} />
+        <img src={"/ad.png"} style={{ width: "100%" }} />
       </div>
       <HomeCard
         image="📺"
