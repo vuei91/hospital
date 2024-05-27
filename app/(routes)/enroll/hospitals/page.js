@@ -24,7 +24,7 @@ const Hospitals = () => {
         <HospitalsCard
           key={key}
           title={item.name}
-          dist={"27km"}
+          dist={parseFloat(item.distance).toFixed(2) + "km"}
           addr={item.address}
           review={"12"}
           id={item.id}
