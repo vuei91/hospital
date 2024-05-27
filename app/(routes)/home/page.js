@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Flex, Image } from "antd";
+import { Flex } from "antd";
 import HomeCard from "@/app/(routes)/home/_component/HomeCard";
 
 const Main = () => {

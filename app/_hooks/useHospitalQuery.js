@@ -7,5 +7,3 @@ export const useHospitalQuery = (id) => {
 export const useHospitalsQuery = () => {
   return useCommonQuery(["hospitals"], "hospital/list");
 };
-
-export default useHospitalsQuery;
