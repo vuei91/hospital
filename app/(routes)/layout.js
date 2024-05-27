@@ -3,7 +3,7 @@ import "./globals.css";
 import MobileLayout from "@/app/_components/MobileLayout";
 import { MAP_CLIENT_ID } from "../_constants";
 import LoginLayout from "@/app/_components/LoginLayout";
-import QueryProvider from "@/app/(routes)/QueryProvider";
+import Provider from "@/app/(routes)/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,18 +15,12 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <script
-          type="text/javascript"
-          src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${MAP_CLIENT_ID}`}
-        ></script>
-      </head>
       <body className={inter.className}>
-        <QueryProvider>
+        <Provider>
           <LoginLayout>
             <MobileLayout>{children}</MobileLayout>
           </LoginLayout>
-        </QueryProvider>
+        </Provider>
       </body>
     </html>
   );
