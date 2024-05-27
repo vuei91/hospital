@@ -9,6 +9,26 @@ const mypage = () => {
   const { resp, isSuccess } = useMemberQuery();
   if (!isSuccess) return null;
   const member = resp?.data;
+  const getIconType = (type) => {
+    switch (type) {
+      case "kakao":
+        return "./kakao.png";
+      case "naver":
+        return "./naver.png";
+      default:
+        return "./normal.png";
+    }
+  };
+  const getLoginType = (type) => {
+    switch (type) {
+      case "kakao":
+        return "카카오로그인";
+      case "naver":
+        return "네이버로그인";
+      default:
+        return "일반로그인";
+    }
+  };
   return (
     <>
       <style jsx>{`
@@ -20,17 +40,11 @@ const mypage = () => {
       `}</style>
       <div style={{ margin: 20 }}>
         <Flex align="center">
-          <div
-            style={{
-              width: 24,
-              height: 24,
-              backgroundColor: "#C5C5C5",
-              marginRight: 10,
-            }}
-          ></div>
-          <div>
-            {member?.["type"] === "naver" ? "네이버로그인" : "카카오로그인"}
-          </div>
+          <img
+            src={getIconType(member?.["type"])}
+            style={{ width: 24, height: 24, marginRight: 10 }}
+          />
+          <div>{getLoginType(member?.["type"])}</div>
         </Flex>
         <table style={{ marginTop: 20 }}>
           <tbody>
