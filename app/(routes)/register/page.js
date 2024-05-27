@@ -34,7 +34,7 @@ const RegisterPatient = () => {
         }}
       />
       <Input
-        placeholder="장애 등급을 표기해 주세요."
+        placeholder="요양 등급을 표기해 주세요."
         allowClear
         style={{
           width: "95%",
