@@ -43,6 +43,7 @@ const mypage = () => {
           <img
             src={getIconType(member?.["type"])}
             style={{ width: 24, height: 24, marginRight: 10 }}
+            alt="login_type"
           />
           <div>{getLoginType(member?.["type"])}</div>
         </Flex>

@@ -47,7 +47,7 @@ const Main = () => {
         />
       </Flex>
       <div style={{ marginTop: 20, marginBottom: 10, flexGrow: 1 }}>
-        <img src={"/ad.png"} style={{ width: "100%" }} />
+        <img src={"/ad.png"} style={{ width: "100%" }} alt={"광고이미지"} />
       </div>
       <HomeCard
         image="📺"
