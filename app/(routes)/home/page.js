@@ -1,9 +1,23 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Flex } from "antd";
 import HomeCard from "@/app/(routes)/home/_component/HomeCard";
+import { postApi } from "@/app/_hooks/api";
 
 const Main = () => {
+  useEffect(() => {
+    (async () => {
+      window.navigator.geolocation.getCurrentPosition(async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const result = await postApi("/redis/username", {
+          latitude,
+          longitude,
+        });
+        console.log(result);
+      });
+    })();
+  }, []);
   return (
     <Flex
       vertical

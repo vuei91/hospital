@@ -1,10 +1,24 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import TopNav from "@/app/_components/TopNav";
 import { Flex, Menu, Select } from "antd";
 import { useHospitalsQuery } from "@/app/_hooks/useHospitalQuery";
+import { postApi } from "@/app/_hooks/api";
 
 const HospitalsLayout = ({ children }) => {
+  useEffect(() => {
+    (async () => {
+      window.navigator.geolocation.getCurrentPosition(async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const result = await postApi("/redis/username", {
+          latitude,
+          longitude,
+        });
+        console.log(result);
+      });
+    })();
+  }, []);
   return (
     <>
       <TopNav title={"신청하기"} isBack />
