@@ -1,16 +1,21 @@
 "use client";
-import React, { useState } from "react";
-import { Button, Checkbox, Collapse } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Checkbox, Collapse, Flex } from "antd";
 import useMemberQuery from "@/app/_hooks/useMemberQuery";
 import enrollStore from "@/app/_service/enrollStore";
 import hospitalStore from "@/app/_service/hospitalStore";
 import { useEnrollsByHospitalQuery } from "@/app/_hooks/useEnrollQuery";
 import { useRouter } from "next/navigation";
+import { CloseOutlined } from "@ant-design/icons";
+import { useDeletePatientMutation } from "@/app/_hooks/usePatientMutation";
+import { Modal, Toast } from "antd-mobile";
+
 const ChoicePatient = () => {
   const router = useRouter();
   const { hospitalId } = hospitalStore((state) => state);
   const { setPatientIds } = enrollStore((state) => state);
-  const { resp, isSuccess } = useMemberQuery();
+  const { resp, isSuccess, refetch } = useMemberQuery();
+  const { deletePatient } = useDeletePatientMutation();
   const { resp: enrollResp, isSuccess: enrollIsSuccess } =
     useEnrollsByHospitalQuery(hospitalId);
   const [keys, setKeys] = useState([]);
@@ -30,6 +35,43 @@ const ChoicePatient = () => {
       setPatientIds(k);
     }
   };
+  const remove = async (id) => {
+    await Modal.confirm({
+      content: "정말 삭제하시겠습니까?",
+      onConfirm: async () => {
+        deletePatient(id, {
+          onSuccess(data) {
+            if (data.status === "success") {
+              refetch().then(() => {
+                Toast.show({
+                  icon: "success",
+                  content: "삭제완료",
+                  position: "bottom",
+                });
+                if (parseInt(data.data) === 0) {
+                  Modal.alert({
+                    content: "환자 먼저 등록이 필요합니다",
+                    confirmText: "확인",
+                    onConfirm: () => {
+                      router.push("/register");
+                    },
+                  });
+                }
+              });
+            } else {
+              Modal.alert({
+                content: "삭제가 되지 않았습니다",
+                title: "삭제 실패",
+                confirmText: "확인",
+              });
+            }
+          },
+        });
+      },
+      confirmText: "삭제",
+      cancelText: "취소",
+    });
+  };
   return (
     <div>
       <Collapse
@@ -41,27 +83,32 @@ const ChoicePatient = () => {
         items={patients.map((patient) => ({
           key: patient.id,
           label: (
-            <Checkbox
-              disabled={patientIds?.includes(patient.id) || false}
-              onChange={onChange}
-              value={patient.id}
-              style={{ width: "100%", padding: 20 }}
-            >
-              {patient.name}
-              {patientIds?.includes(patient.id) || false ? (
-                <span
-                  style={{
-                    borderRadius: 4,
-                    backgroundColor: "#BBBBBB",
-                    padding: 5,
-                    color: "white",
-                    marginLeft: 20,
-                  }}
-                >
-                  이미 신청되었습니다
-                </span>
-              ) : null}
-            </Checkbox>
+            <Flex style={{ padding: 20 }}>
+              <Checkbox
+                disabled={patientIds?.includes(patient.id) || false}
+                onChange={onChange}
+                value={patient.id}
+                style={{ flexGrow: 1 }}
+              >
+                {patient.name}
+                {patientIds?.includes(patient.id) || false ? (
+                  <span
+                    style={{
+                      borderRadius: 4,
+                      backgroundColor: "#BBBBBB",
+                      padding: 5,
+                      color: "white",
+                      marginLeft: 20,
+                    }}
+                  >
+                    이미 신청되었습니다
+                  </span>
+                ) : null}
+              </Checkbox>
+              <Button danger type={"link"} onClick={() => remove(patient.id)}>
+                <CloseOutlined />
+              </Button>
+            </Flex>
           ),
           children: (
             <PatientDetail
