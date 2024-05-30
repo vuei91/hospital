@@ -9,6 +9,12 @@ import {
   getSubjects,
   getToday,
 } from "@/app/(routes)/enroll/hospital/[id]/_common";
+import {
+  Container as MapDiv,
+  Marker,
+  NaverMap,
+  useNavermaps,
+} from "react-naver-maps";
 
 const columns = [
   {
@@ -130,16 +136,6 @@ const DiagnosisInfo = () => {
 };
 
 const HospitalPlace = ({ address, latitude, longitude, parking }) => {
-  useEffect(() => {
-    const map = new window.naver.maps.Map("map", {
-      center: new naver.maps.LatLng(latitude, longitude),
-      zoom: 15,
-    });
-    new naver.maps.Marker({
-      position: new naver.maps.LatLng(latitude, longitude),
-      map: map,
-    });
-  }, []);
   const getParking = (parking) => {
     let list = parking.split("\n");
     if (list.length > 1) {
@@ -165,15 +161,16 @@ const HospitalPlace = ({ address, latitude, longitude, parking }) => {
           복사
         </Button>
       </Flex>
-      <div
-        id="map"
+      <MapDiv
         style={{
           width: "80%",
           height: 300,
           marginLeft: "auto",
           marginRight: "auto",
         }}
-      ></div>
+      >
+        <MyMap latitude={latitude} longitude={longitude} />
+      </MapDiv>
       {parking ? (
         <div style={{ lineHeight: 1.6, margin: "20px 0" }}>
           <strong style={{ fontSize: 16 }}>주차정보</strong>
@@ -183,6 +180,18 @@ const HospitalPlace = ({ address, latitude, longitude, parking }) => {
         </div>
       ) : null}
     </div>
+  );
+};
+
+const MyMap = ({ latitude, longitude }) => {
+  const navermaps = useNavermaps();
+  return (
+    <NaverMap
+      defaultCenter={new navermaps.LatLng(latitude, longitude)}
+      defaultZoom={15}
+    >
+      <Marker defaultPosition={new navermaps.LatLng(latitude, longitude)} />
+    </NaverMap>
   );
 };
 

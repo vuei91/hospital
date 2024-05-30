@@ -1,6 +1,6 @@
 "use client";
 import { Button, Flex, Table } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 import { useParams } from "next/navigation";
 import { useHospitalQuery } from "@/app/_hooks/useHospitalQuery";
 import {
@@ -11,8 +11,8 @@ import {
 } from "@/app/(routes)/enroll/hospital/[id]/_common";
 import {
   Container as MapDiv,
-  NaverMap,
   Marker,
+  NaverMap,
   useNavermaps,
 } from "react-naver-maps";
 
