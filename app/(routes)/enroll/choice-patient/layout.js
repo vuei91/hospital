@@ -70,7 +70,7 @@ const ChoicePatientLayout = ({ children }) => {
   return (
     <>
       <TopNav title={"신청하기"} isBack />
-      <div className="container">{children}</div>
+      <div className="container is_bottom">{children}</div>
       <BottomButton text={"신청하기"} onClick={enroll} />
     </>
   );

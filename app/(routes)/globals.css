@@ -31,6 +31,10 @@ body {
     overflow-y: scroll;
 }
 
+.is_bottom {
+    height: calc(100vh - 135px);
+}
+
 .none_bottom {
     height: calc(100vh - 48px);
 }
