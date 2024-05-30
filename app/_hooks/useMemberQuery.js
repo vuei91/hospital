@@ -6,11 +6,12 @@ const useMemberQuery = () => {
     data: resp,
     isLoading,
     isSuccess,
+    refetch,
   } = useQuery({
     queryKey: ["member"],
     queryFn: () => getApi("member/"),
   });
-  return { resp, isLoading, isSuccess };
+  return { resp, isLoading, isSuccess, refetch };
 };
 
 export default useMemberQuery;

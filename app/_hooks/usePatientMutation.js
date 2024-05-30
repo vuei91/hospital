@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { postApi, putApi } from "@/app/_hooks/api";
+import { deleteApi, postApi, putApi } from "@/app/_hooks/api";
 
 export const useCreatePatientMutation = () => {
   const { data, mutate } = useMutation({
@@ -18,7 +18,7 @@ export const useCreatePatientMutation = () => {
 
 export const useUpdatePatientMutation = (id) => {
   const { data, mutate } = useMutation({
-    mutationKey: ["patient", id],
+    mutationKey: ["update-patient", id],
     mutationFn: (params) => {
       return putApi("/patient/" + id, params);
     },
@@ -29,4 +29,19 @@ export const useUpdatePatientMutation = (id) => {
   };
 
   return { data, updatePatient };
+};
+
+export const useDeletePatientMutation = () => {
+  const { data, mutate } = useMutation({
+    mutationKey: ["remove-patient"],
+    mutationFn: (id) => {
+      return deleteApi(`/patient/${id}`);
+    },
+  });
+
+  const deletePatient = (id, options) => {
+    return mutate(id, options);
+  };
+
+  return { data, deletePatient };
 };
