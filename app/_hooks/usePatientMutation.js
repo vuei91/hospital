@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { postApi } from "@/app/_hooks/api";
+import { postApi, putApi } from "@/app/_hooks/api";
 
-const usePatientMutation = () => {
+export const useCreatePatientMutation = () => {
   const { data, mutate } = useMutation({
     mutationKey: ["patient"],
     mutationFn: (params) => {
@@ -16,4 +16,17 @@ const usePatientMutation = () => {
   return { data, createPatient };
 };
 
-export default usePatientMutation;
+export const useUpdatePatientMutation = (id) => {
+  const { data, mutate } = useMutation({
+    mutationKey: ["patient", id],
+    mutationFn: (params) => {
+      return putApi("/patient/" + id, params);
+    },
+  });
+
+  const updatePatient = (params, options) => {
+    return mutate(params, options);
+  };
+
+  return { data, updatePatient };
+};

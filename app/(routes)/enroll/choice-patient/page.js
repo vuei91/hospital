@@ -68,6 +68,11 @@ const ChoicePatient = () => {
               memberName={member.name || member.username}
               address={patient.address}
               grade={patient.grade}
+              onClick={() => {
+                setKeys([]);
+                setPatientIds([]);
+                router.push("/register?id=" + patient.id);
+              }}
             />
           ),
           showArrow: false,
@@ -93,7 +98,7 @@ const ChoicePatient = () => {
   );
 };
 
-const PatientDetail = ({ memberName, grade, address }) => {
+const PatientDetail = ({ memberName, grade, address, onClick }) => {
   return (
     <>
       <style jsx>{`
@@ -135,7 +140,7 @@ const PatientDetail = ({ memberName, grade, address }) => {
           )}
         </tbody>
       </table>
-      <Button block size={"large"}>
+      <Button block size={"large"} onClick={onClick}>
         수정하기
       </Button>
     </>
