@@ -40,7 +40,7 @@ const HistoryMain = () => {
       <List
         style={{ width: "100%", margin: "auto" }}
         dataSource={nav === "progress" ? progressList : completeList}
-        renderItem={(item, index) => (
+        renderItem={(item) => (
           <List.Item style={{ backgroundColor: "white", margin: 10 }}>
             {nav === "progress" ? (
               <MainCard
@@ -65,7 +65,6 @@ const HistoryMain = () => {
 const MainCard = ({
   state,
   startTime,
-  hospitalId,
   hospitalName,
   memberName,
   patientName,
