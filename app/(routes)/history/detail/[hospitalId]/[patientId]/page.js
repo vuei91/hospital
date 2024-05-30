@@ -152,7 +152,10 @@ const ThirdInfo = () => {
         </Flex>
         <Flex justify="space-between" style={{ padding: "10px 20px 0 20px" }}>
           <div style={{ color: "#717375", fontSize: 16 }}>병원정보</div>
-          <div onClick={() => router.push(`/history/hospital/${hospitalId}`)}>
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => router.push(`/history/hospital/${hospitalId}`)}
+          >
             <strong style={{ fontSize: 16 }}>자세히보기</strong>
             &nbsp;
             <RightOutlined size={14} color={"#717375"} />
