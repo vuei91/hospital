@@ -1,17 +1,17 @@
 import { useCommonQuery } from "@/app/_hooks/api";
 
-export const useEnrollsByUsernameQuery = () => {
+export const useHistoryMainQuery = () => {
   return useCommonQuery(["enrolls"], "/enroll/");
 };
 
-export const useEnrollsByHospitalQuery = (id) => {
-  return useCommonQuery(["enrolls", id], `/enroll/${id}`);
+export const useHistoryDetailQuery = (patientId) => {
+  return useCommonQuery(["enrolls", patientId], `/enroll/${patientId}`);
 };
 
-export const useEnrollByHospitalAndPatientQuery = (hospitalId, patientId) => {
+export const useEnrollsByHospitalQuery = (hospitalId) => {
   return useCommonQuery(
-    ["enroll", hospitalId, patientId],
-    `/enroll/${hospitalId}/${patientId}`,
+    ["enrolls", "hospital", hospitalId],
+    `/enroll/hospital/${hospitalId}`,
   );
 };
 

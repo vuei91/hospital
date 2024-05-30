@@ -8,10 +8,10 @@ import {
 } from "@/app/(routes)/history/_components/Tags";
 import { useRouter } from "next/navigation";
 import { List } from "antd";
-import { useEnrollsByUsernameQuery } from "@/app/_hooks/useEnrollQuery";
+import { useHistoryMainQuery } from "@/app/_hooks/useEnrollQuery";
 
 const HistoryMain = () => {
-  const { resp, isSuccess } = useEnrollsByUsernameQuery();
+  const { resp, isSuccess } = useHistoryMainQuery();
   const [nav, setNav] = useState("progress");
   if (!isSuccess) return null;
   const enrolls = resp?.data;
@@ -45,12 +45,12 @@ const HistoryMain = () => {
             {nav === "progress" ? (
               <MainCard
                 state={"waiting"}
-                startTime={item?.["enrollStartTime"]}
+                startTime={item?.["enrollStartTime"] ?? "2024-04-12(금)"}
                 hospitalName={item?.["hospitalName"]}
                 memberName={item?.["memberName"]}
-                patientName={item?.["patientName"]}
-                hospitalId={item?.["hospitalId"]}
                 patientId={item?.["patientId"]}
+                patientName={item?.["patientName"]}
+                exceptCount={item?.["exceptCount"]}
               />
             ) : (
               <MainCard state={"complete"} />
@@ -70,18 +70,21 @@ const MainCard = ({
   memberName,
   patientName,
   patientId,
+  exceptCount,
 }) => {
   const router = useRouter();
   const goToDetail = () => {
-    router.push(`/history/detail/${hospitalId}/${patientId}`);
+    router.push(`/history/detail/${patientId}`);
   };
   return (
     <Space direction="vertical" style={{ width: "100%", padding: "10px 20px" }}>
       {state === "waiting" ? <Waiting /> : null}
       {state === "contacting" ? <Contacting /> : null}
       {state === "complete" ? <Complete /> : null}
-      <div style={{ fontSize: 12, color: "#B1B9C0" }}>2024-04-12(금)</div>
-      <div style={{ fontSize: 18, fontWeight: 600 }}>{hospitalName}</div>
+      <div style={{ fontSize: 12, color: "#B1B9C0" }}>{startTime}</div>
+      <div style={{ fontSize: 18, fontWeight: 600 }}>
+        {hospitalName + (exceptCount > 0 ? ` 외 ${exceptCount}곳` : "")}
+      </div>
       <Space direction={"vertical"}>
         <Space>
           <span style={{ color: "#717375", fontSize: 16 }}>신청인</span>

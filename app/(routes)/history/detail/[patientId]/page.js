@@ -1,30 +1,39 @@
 "use client";
-import React, { useContext } from "react";
+import React from "react";
 import { Steps } from "antd-mobile";
 import { useParams, useRouter } from "next/navigation";
 import { RightOutlined } from "@ant-design/icons";
 import { Button, Flex } from "antd";
 import { StepTag } from "@/app/(routes)/history/_components/Tags";
-import { useEnrollByHospitalAndPatientQuery } from "@/app/_hooks/useEnrollQuery";
+import { useHistoryDetailQuery } from "@/app/_hooks/useEnrollQuery";
 
 const HistoryDetail = () => {
+  const { patientId } = useParams();
+  const { resp, isSuccess } = useHistoryDetailQuery(patientId);
+  if (!isSuccess) return null;
+  const enrolls = resp?.data;
   return (
     <>
-      <FirstInfo />
-      <SecondInfo />
-      <ThirdInfo />
+      <FirstInfo
+        memberName={enrolls?.[0]?.["memberName"]}
+        patientName={enrolls?.[0]?.["patientName"]}
+      />
+      <SecondInfo patientId={patientId} />
+      {enrolls?.map((enroll, index) => (
+        <ThirdInfo
+          key={index}
+          index={index + 1}
+          hospitalName={enroll?.["hospitalName"]}
+          hospitalAddress={enroll?.["hospitalAddress"]}
+          enrollStatus={enroll?.["enrollStatus"]}
+          hospitalId={enroll?.["hospitalId"]}
+        />
+      ))}
     </>
   );
 };
 
-const FirstInfo = () => {
-  const { hospitalId, patientId } = useParams();
-  const { resp, isSuccess } = useEnrollByHospitalAndPatientQuery(
-    hospitalId,
-    patientId,
-  );
-  if (!isSuccess) return null;
-  const enroll = resp?.data;
+const FirstInfo = ({ memberName, patientName }) => {
   return (
     <Flex
       vertical
@@ -39,25 +48,18 @@ const FirstInfo = () => {
     >
       <Flex justify="space-between" style={{ padding: "0 20px 10px 20px" }}>
         <div style={{ fontSize: 16 }}>신청인</div>
-        <strong style={{ fontSize: 16 }}>{enroll?.["memberName"]}</strong>
+        <strong style={{ fontSize: 16 }}>{memberName}</strong>
       </Flex>
       <Flex justify="space-between" style={{ padding: "10px 20px 0 20px" }}>
         <div style={{ fontSize: 16 }}>환자명</div>
-        <strong style={{ fontSize: 16 }}>{enroll?.["patientName"]}</strong>
+        <strong style={{ fontSize: 16 }}>{patientName}</strong>
       </Flex>
     </Flex>
   );
 };
 
-const SecondInfo = () => {
+const SecondInfo = ({ patientId }) => {
   const router = useRouter();
-  const { hospitalId, patientId } = useParams();
-  const { resp, isSuccess } = useEnrollByHospitalAndPatientQuery(
-    hospitalId,
-    patientId,
-  );
-  if (!isSuccess) return null;
-  const enroll = resp?.data;
   return (
     <Flex vertical justify={"center"} style={{ width: "100%", height: 120 }}>
       <div style={{ padding: 20 }}>
@@ -83,14 +85,14 @@ const SecondInfo = () => {
   );
 };
 
-const ThirdInfo = () => {
+const ThirdInfo = ({
+  index,
+  hospitalName,
+  hospitalAddress,
+  enrollStatus,
+  hospitalId,
+}) => {
   const router = useRouter();
-  const { hospitalId, patientId } = useParams();
-  const { resp, isSuccess } = useEnrollByHospitalAndPatientQuery(
-    hospitalId,
-    patientId,
-  );
-  if (!isSuccess) return null;
   const getStatus = (status) => {
     switch (status) {
       case "ENROLL":
@@ -105,32 +107,25 @@ const ThirdInfo = () => {
         return { step: 4, text: "취소" };
     }
   };
-  const enroll = resp?.data;
   return (
     <div
       style={{
         width: "100%",
         backgroundColor: "white",
-        borderTop: "1px solid #DFE2E4",
-        borderBottom: "1px solid #DFE2E4",
+        borderTop: "0.5px solid #DFE2E4",
+        borderBottom: "0.5px solid #DFE2E4",
       }}
     >
       <div style={{ padding: 20 }}>
-        <NumberDesign number={1} />
-        <strong style={{ fontSize: 16, lineHeight: 2 }}>
-          {enroll?.["hospitalName"]}
-        </strong>
-        <div style={{ fontSize: 14, color: "#717375" }}>
-          {enroll?.["hospitalAddress"]}
-        </div>
+        <NumberDesign number={index} />
+        <strong style={{ fontSize: 16, lineHeight: 2 }}>{hospitalName}</strong>
+        <div style={{ fontSize: 14, color: "#717375" }}>{hospitalAddress}</div>
         <div style={{ paddingTop: 10 }}>
-          <StepTag
-            text={`${getStatus(enroll?.["enrollStatus"])?.step + 1}단계`}
-          />
+          <StepTag text={`${getStatus(enrollStatus)?.step + 1}단계`} />
         </div>
       </div>
       <div>
-        <Steps current={getStatus(enroll?.["enrollStatus"])?.step}>
+        <Steps current={getStatus(enrollStatus)?.step}>
           <Steps.Step title="1단계" />
           <Steps.Step title="2단계" />
           <Steps.Step title="3단계" />
@@ -147,7 +142,7 @@ const ThirdInfo = () => {
         <Flex justify="space-between" style={{ padding: "0 20px 10px 20px" }}>
           <div style={{ color: "#717375", fontSize: 16 }}>진행현황</div>
           <strong style={{ fontSize: 16 }}>
-            {getStatus(enroll?.["enrollStatus"])?.text}
+            {getStatus(enrollStatus)?.text}
           </strong>
         </Flex>
         <Flex justify="space-between" style={{ padding: "10px 20px 0 20px" }}>
