@@ -153,7 +153,7 @@ const HospitalPlace = ({ address, latitude, longitude, parking }) => {
         <Button
           onClick={() => {
             const copyText = document.getElementById("copyText").innerText;
-            navigator.clipboard.writeText(copyText).then((res) => {
+            navigator.clipboard.writeText(copyText).then(() => {
               alert("텍스트가 복사되었습니다!");
             });
           }}
