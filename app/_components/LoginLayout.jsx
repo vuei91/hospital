@@ -1,6 +1,6 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getApi } from "@/app/_hooks/api";
 
 const LoginLayout = ({ children }) => {
