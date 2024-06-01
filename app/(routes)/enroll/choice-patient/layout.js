@@ -54,7 +54,7 @@ const ChoicePatientLayout = ({ children }) => {
             } else {
               Toast.show({
                 icon: "fail",
-                content: "환자를 선택해주세요",
+                content: "대상자를 선택해주세요",
                 position: "bottom",
               });
             }

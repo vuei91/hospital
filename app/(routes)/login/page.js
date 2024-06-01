@@ -1,7 +1,7 @@
 "use client";
 import { BACKEND_URL } from "@/app/_constants";
 import { Button } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 
 const Login = () => {
   // const router = useRouter();

@@ -67,13 +67,13 @@ const Layout = ({ children }) => {
     }
     if (!address || !address.replace(/ /g, "")) {
       return Modal.alert({
-        content: "환자의 주소를 입력해주세요",
+        content: "대상자의 주소를 입력해주세요",
         confirmText: "확인",
       });
     }
-    const geocoder = new kakao.maps.services.Geocoder();
+    const geocoder = new window.kakao?.maps?.services?.Geocoder();
     // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(address, async function (result, status) {
+    geocoder?.addressSearch(address, async function (result, status) {
       let longitude, latitude;
       // 정상적으로 검색이 완료됐으면
       if (status === kakao.maps.services.Status.OK) {
@@ -87,7 +87,7 @@ const Layout = ({ children }) => {
   };
   return (
     <>
-      <TopNav title={"환자정보입력"} isBack />
+      <TopNav title={"대상자 정보입력"} isBack />
       <div className="container">{children}</div>
       <BottomButton text={!id ? "등록" : "수정"} onClick={submit} />
     </>

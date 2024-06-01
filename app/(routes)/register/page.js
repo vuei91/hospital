@@ -30,7 +30,7 @@ const RegisterPatient = () => {
     <Flex vertical justify="center" style={{ margin: "auto", width: "90%" }}>
       <Typography.Title level={5}>이름</Typography.Title>
       <Input
-        placeholder="환자의 이름을 입력해주세요"
+        placeholder="대상자의 이름을 입력해주세요"
         defaultValue={patient?.["name"]}
         allowClear
         onChange={(e) => {
@@ -62,7 +62,7 @@ const RegisterPatient = () => {
       />
       <Typography.Title level={5}>주소</Typography.Title>
       <Mentions
-        placeholder="환자의 주소를 입력해 주세요."
+        placeholder="대상자의 주소를 입력해 주세요."
         readOnly
         value={juso}
         onClick={(e) => {

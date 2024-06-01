@@ -23,7 +23,7 @@ const HospitalLayout = ({ children }) => {
   const move = async () => {
     if (member?.["patients"]?.length === 0) {
       await Modal.alert({
-        content: "환자 먼저 등록이 필요합니다",
+        content: "대상자 먼저 등록이 필요합니다",
         confirmText: "확인",
         onConfirm: () => {
           router.push("/register");

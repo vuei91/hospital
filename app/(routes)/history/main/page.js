@@ -90,7 +90,7 @@ const MainCard = ({
           <span style={{ fontWeight: 600, fontSize: 16 }}>{memberName}</span>
         </Space>
         <Space>
-          <span style={{ color: "#717375", fontSize: 16 }}>환자명</span>
+          <span style={{ color: "#717375", fontSize: 16 }}>대상자명</span>
           <span style={{ fontWeight: 600, fontSize: 16 }}>{patientName}</span>
         </Space>
       </Space>

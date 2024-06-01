@@ -18,7 +18,7 @@ export default async function RootLayout({ children }) {
       <head>
         <script
           type="text/javascript"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&libraries=services`}
+          src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&libraries=services`}
         ></script>
       </head>
       <body className={inter.className}>

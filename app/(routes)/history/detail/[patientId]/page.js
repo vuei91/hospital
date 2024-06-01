@@ -51,7 +51,7 @@ const FirstInfo = ({ memberName, patientName }) => {
         <strong style={{ fontSize: 16 }}>{memberName}</strong>
       </Flex>
       <Flex justify="space-between" style={{ padding: "10px 20px 0 20px" }}>
-        <div style={{ fontSize: 16 }}>환자명</div>
+        <div style={{ fontSize: 16 }}>대상자명</div>
         <strong style={{ fontSize: 16 }}>{patientName}</strong>
       </Flex>
     </Flex>
