@@ -4,10 +4,12 @@ const patientInfoStore = create((set) => ({
   name: null,
   grade: null,
   phone: null,
+  address: null,
   setName: (name) => set({ name }),
   setGrade: (grade) => set({ grade }),
   setPhone: (phone) => set({ phone }),
-  clear: () => set({ name: null, grade: null, phone: null }),
+  setAddress: (address) => set({ address }),
+  clear: () => set({ name: null, grade: null, phone: null, address: null }),
 }));
 
 export default patientInfoStore;

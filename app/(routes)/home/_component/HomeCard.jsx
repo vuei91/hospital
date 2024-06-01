@@ -7,7 +7,7 @@ const HomeCard = (props) => {
     <Card
       hoverable
       style={{ alignContent: "center", flexGrow: 1, ...props.style }}
-      onClick={() => router.push(props.url)}
+      onClick={() => (props.url ? router.push(props.url) : null)}
     >
       <div style={{ fontSize: 16 }}>{props.image}</div>
       <strong style={{ fontSize: 16 }}>{props.title}</strong>

@@ -15,15 +15,23 @@ const Layout = ({ children }) => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const router = useRouter();
-  const { name, phone, grade, clear } = patientInfoStore((state) => state);
+  const { name, phone, grade, address, clear } = patientInfoStore(
+    (state) => state,
+  );
   const { createPatient } = useCreatePatientMutation();
   const { updatePatient } = useUpdatePatientMutation(id);
   const { refetch } = usePatientOneQuery(id);
-  const create = async () => {
-    await createPatient({ name, phone, grade }, { onSuccess });
+  const create = async (latitude, longitude) => {
+    await createPatient(
+      { name, phone, grade, address, latitude, longitude },
+      { onSuccess },
+    );
   };
-  const update = async () => {
-    await updatePatient({ name, phone, grade }, { onSuccess });
+  const update = async (latitude, longitude) => {
+    await updatePatient(
+      { name, phone, grade, address, latitude, longitude },
+      { onSuccess },
+    );
   };
   const onSuccess = (data) => {
     if (data?.status === "success") {
@@ -51,13 +59,31 @@ const Layout = ({ children }) => {
         confirmText: "확인",
       });
     }
-    if (!grade || !grade.replace(/ /g, "")) {
+    if (!grade) {
       return Modal.alert({
         content: "요양등급을 입력해주세요",
         confirmText: "확인",
       });
     }
-    !id ? await create() : await update();
+    if (!address || !address.replace(/ /g, "")) {
+      return Modal.alert({
+        content: "환자의 주소를 입력해주세요",
+        confirmText: "확인",
+      });
+    }
+    const geocoder = new kakao.maps.services.Geocoder();
+    // 주소로 좌표를 검색합니다
+    geocoder.addressSearch(address, async function (result, status) {
+      let longitude, latitude;
+      // 정상적으로 검색이 완료됐으면
+      if (status === kakao.maps.services.Status.OK) {
+        longitude = result[0].x;
+        latitude = result[0].y;
+      }
+      !id
+        ? await create(latitude, longitude)
+        : await update(latitude, longitude);
+    });
   };
   return (
     <>

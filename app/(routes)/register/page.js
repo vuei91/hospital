@@ -1,12 +1,18 @@
 "use client";
-import React, { useEffect } from "react";
-import { Flex, Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { Flex, Input, Mentions, Select, Typography } from "antd";
 import patientInfoStore from "@/app/_service/patientInfoStore";
 import { useSearchParams } from "next/navigation";
 import { usePatientOneQuery } from "@/app/_hooks/usePatientQuery";
+import DaumPostcode from "react-daum-postcode";
+import { Toast } from "antd-mobile";
 
 const RegisterPatient = () => {
-  const { setName, setPhone, setGrade } = patientInfoStore((state) => state);
+  const [isOpenDaumPost, setIsOpenDaumPost] = useState(false);
+  const [juso, setJuso] = useState();
+  const { setName, setPhone, setGrade, setAddress } = patientInfoStore(
+    (state) => state,
+  );
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const { resp, isSuccess } = usePatientOneQuery(id);
@@ -21,51 +27,67 @@ const RegisterPatient = () => {
   if (!isSuccess) return null;
   const patient = resp.data;
   return (
-    <Flex vertical justify="center" align="center">
+    <Flex vertical justify="center" style={{ margin: "auto", width: "90%" }}>
+      <Typography.Title level={5}>이름</Typography.Title>
       <Input
         placeholder="환자의 이름을 입력해주세요"
         defaultValue={patient?.["name"]}
         allowClear
-        style={{
-          width: "95%",
-          marginTop: 50,
-          height: 48,
-          backgroundColor: "#F7F7FA",
-        }}
         onChange={(e) => {
           setName(e.target.value);
         }}
       />
+      <Typography.Title level={5}>휴대폰번호</Typography.Title>
       <Input
         placeholder="연락 가능한 휴대폰 번호를 입력해 주세요."
         defaultValue={patient?.["phone"]}
         allowClear
-        style={{
-          width: "95%",
-          marginTop: 15,
-          height: 48,
-          backgroundColor: "#F7F7FA",
-        }}
-        onLoad={() => setPhone(patient?.["phone"])}
         onChange={(e) => {
           setPhone(e.target.value);
         }}
       />
-      <Input
-        placeholder="요양 등급을 표기해 주세요."
+      <Typography.Title level={5}>요양등급</Typography.Title>
+      <Select
+        placeholder={"요양등급을 선택해주세요"}
         defaultValue={patient?.["grade"]}
-        allowClear
-        style={{
-          width: "95%",
-          marginTop: 15,
-          height: 48,
-          backgroundColor: "#F7F7FA",
-        }}
-        onLoad={() => setGrade(patient?.["grade"])}
-        onChange={(e) => {
-          setGrade(e.target.value);
+        onChange={(e) => setGrade(e)}
+        options={[
+          { value: 1, label: "1등급" },
+          { value: 2, label: "2등급" },
+          { value: 3, label: "3등급" },
+          { value: 4, label: "4등급" },
+          { value: 5, label: "5등급" },
+          { value: -1, label: "없음" },
+        ]}
+      />
+      <Typography.Title level={5}>주소</Typography.Title>
+      <Mentions
+        placeholder="환자의 주소를 입력해 주세요."
+        readOnly
+        value={juso}
+        onClick={(e) => {
+          setIsOpenDaumPost(!isOpenDaumPost);
         }}
       />
+      <div style={{ marginTop: 10, marginBottom: 10 }}>
+        <Input
+          placeholder="주소를 먼저 입력하시고, 상세주소를 입력해주세요"
+          disabled={!juso}
+          onChange={(e) => {
+            setAddress(juso + " " + e.target.value);
+          }}
+          allowClear
+        />
+      </div>
+      {isOpenDaumPost ? (
+        <DaumPostcode
+          onComplete={(data) => {
+            setJuso(data.address);
+            setIsOpenDaumPost(false);
+          }}
+          autoClose={false}
+        />
+      ) : null}
     </Flex>
   );
 };

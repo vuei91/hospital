@@ -88,7 +88,7 @@ const ChoicePatient = () => {
                 disabled={patientIds?.includes(patient.id) || false}
                 onChange={onChange}
                 value={patient.id}
-                style={{ flexGrow: 1 }}
+                style={{ flexGrow: 1, alignItems: "center" }}
               >
                 {patient.name}
                 {patientIds?.includes(patient.id) || false ? (
@@ -175,8 +175,8 @@ const PatientDetail = ({ memberName, grade, address, onClick }) => {
           )}
           {grade && (
             <tr>
-              <th>장애 종류</th>
-              <td>{grade}</td>
+              <th>요양 등급</th>
+              <td>{grade && grade !== -1 ? `요양 ${grade}등급` : "없음"}</td>
             </tr>
           )}
           {address && (

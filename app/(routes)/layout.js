@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import MobileLayout from "@/app/_components/MobileLayout";
-import { MAP_CLIENT_ID } from "../_constants";
+import { KAKAO_API_KEY } from "../_constants";
 import LoginLayout from "@/app/_components/LoginLayout";
 import Provider from "@/app/(routes)/provider";
 
@@ -15,6 +15,12 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="text/javascript"
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&libraries=services`}
+        ></script>
+      </head>
       <body className={inter.className}>
         <Provider>
           <LoginLayout>
