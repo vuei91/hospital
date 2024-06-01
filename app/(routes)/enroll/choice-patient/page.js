@@ -105,9 +105,11 @@ const ChoicePatient = () => {
                   </span>
                 ) : null}
               </Checkbox>
-              <Button danger type={"link"} onClick={() => remove(patient.id)}>
-                <CloseOutlined />
-              </Button>
+              {patientIds?.includes(patient.id) || false ? null : (
+                <Button danger type={"link"} onClick={() => remove(patient.id)}>
+                  <CloseOutlined />
+                </Button>
+              )}
             </Flex>
           ),
           children: (

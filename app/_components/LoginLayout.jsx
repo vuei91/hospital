@@ -21,7 +21,7 @@ const LoginLayout = ({ children }) => {
         }
       }
     })();
-  }, []);
+  }, [pathname]);
   return <>{children}</>;
 };
 
