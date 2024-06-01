@@ -5,7 +5,6 @@ import patientInfoStore from "@/app/_service/patientInfoStore";
 import { useSearchParams } from "next/navigation";
 import { usePatientOneQuery } from "@/app/_hooks/usePatientQuery";
 import DaumPostcode from "react-daum-postcode";
-import { Toast } from "antd-mobile";
 
 const RegisterPatient = () => {
   const [isOpenDaumPost, setIsOpenDaumPost] = useState(false);
@@ -65,7 +64,7 @@ const RegisterPatient = () => {
         placeholder="대상자의 주소를 입력해 주세요."
         readOnly
         value={juso}
-        onClick={(e) => {
+        onClick={() => {
           setIsOpenDaumPost(!isOpenDaumPost);
         }}
       />

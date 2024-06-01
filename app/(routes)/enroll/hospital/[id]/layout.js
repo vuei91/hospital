@@ -72,7 +72,6 @@ const HospitalInfo = () => {
 
 const DiagnosisMenu = () => {
   const [nav, setNav] = useState("time");
-  const [scroll, setScroll] = useState({});
   useEffect(() => {
     const hospitalContainer = document.querySelector(".hospital-container");
     const scrollHandler = (e) => {

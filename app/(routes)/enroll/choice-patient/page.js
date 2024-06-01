@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Checkbox, Collapse, Flex } from "antd";
 import useMemberQuery from "@/app/_hooks/useMemberQuery";
 import enrollStore from "@/app/_service/enrollStore";
