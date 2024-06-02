@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Flex, Input, Mentions, Select, Typography } from "antd";
 import patientInfoStore from "@/app/_service/patientInfoStore";
 import { useSearchParams } from "next/navigation";

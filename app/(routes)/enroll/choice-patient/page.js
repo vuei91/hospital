@@ -115,7 +115,7 @@ const ChoicePatient = () => {
           children: (
             <PatientDetail
               memberName={member.name || member.username}
-              address={patient.address}
+              address={patient.address + " " + patient.detailAddress}
               grade={patient.grade}
               onClick={() => {
                 setKeys([]);
