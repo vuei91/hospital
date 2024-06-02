@@ -15,21 +15,20 @@ const RegisterLayout = ({ children }) => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const router = useRouter();
-  const { name, phone, grade, address, clear } = patientInfoStore(
-    (state) => state,
-  );
+  const { name, phone, grade, address, detailAddress, clear } =
+    patientInfoStore((state) => state);
   const { createPatient } = useCreatePatientMutation();
   const { updatePatient } = useUpdatePatientMutation(id);
   const { refetch } = usePatientOneQuery(id);
   const create = async (latitude, longitude) => {
     await createPatient(
-      { name, phone, grade, address, latitude, longitude },
+      { name, phone, grade, address, detailAddress, latitude, longitude },
       { onSuccess },
     );
   };
   const update = async (latitude, longitude) => {
     await updatePatient(
-      { name, phone, grade, address, latitude, longitude },
+      { name, phone, grade, address, detailAddress, latitude, longitude },
       { onSuccess },
     );
   };
@@ -71,19 +70,28 @@ const RegisterLayout = ({ children }) => {
         confirmText: "확인",
       });
     }
+    if (!detailAddress || !detailAddress.replace(/ /g, "")) {
+      return Modal.alert({
+        content: "대상자의 상세주소를 입력해주세요",
+        confirmText: "확인",
+      });
+    }
     const geocoder = new window.kakao.maps.services.Geocoder();
     // 주소로 좌표를 검색합니다
-    geocoder?.addressSearch(address, async function (result, status) {
-      let longitude, latitude;
-      // 정상적으로 검색이 완료됐으면
-      if (status === kakao.maps.services.Status.OK) {
-        longitude = result[0].x;
-        latitude = result[0].y;
-      }
-      !id
-        ? await create(latitude, longitude)
-        : await update(latitude, longitude);
-    });
+    geocoder?.addressSearch(
+      address + " " + detailAddress,
+      async function (result, status) {
+        let longitude, latitude;
+        // 정상적으로 검색이 완료됐으면
+        if (status === kakao.maps.services.Status.OK) {
+          longitude = result[0].x;
+          latitude = result[0].y;
+        }
+        !id
+          ? await create(latitude, longitude)
+          : await update(latitude, longitude);
+      },
+    );
   };
   return (
     <>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Flex, Input, Mentions, Select, Typography } from "antd";
 import patientInfoStore from "@/app/_service/patientInfoStore";
 import { useSearchParams } from "next/navigation";
@@ -9,9 +9,9 @@ import DaumPostcode from "react-daum-postcode";
 const RegisterPatient = () => {
   const [isOpenDaumPost, setIsOpenDaumPost] = useState(false);
   const [juso, setJuso] = useState();
-  const { setName, setPhone, setGrade, setAddress } = patientInfoStore(
-    (state) => state,
-  );
+  const [detail, setDetail] = useState();
+  const { setName, setPhone, setGrade, setAddress, setDetailAddress } =
+    patientInfoStore((state) => state);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const { resp, isSuccess } = usePatientOneQuery(id);
@@ -21,6 +21,8 @@ const RegisterPatient = () => {
       setName(patient.name);
       setPhone(patient.phone);
       setGrade(patient.grade);
+      setAddress(patient.address);
+      setDetailAddress(patient.detailAddress);
     }
   }, [isSuccess]);
   if (!isSuccess) return null;
@@ -63,8 +65,11 @@ const RegisterPatient = () => {
       <Mentions
         placeholder="대상자의 주소를 입력해 주세요."
         readOnly
+        defaultValue={patient?.["address"]}
         value={juso}
         onClick={() => {
+          setDetail(null);
+          setJuso(null);
           setIsOpenDaumPost(!isOpenDaumPost);
         }}
       />
@@ -72,8 +77,12 @@ const RegisterPatient = () => {
         <Input
           placeholder="주소를 먼저 입력하시고, 상세주소를 입력해주세요"
           disabled={!juso}
+          defaultValue={patient?.["detailAddress"]}
+          value={detail}
           onChange={(e) => {
-            setAddress(juso + " " + e.target.value);
+            setDetail(e.target.value);
+            setAddress(juso);
+            setDetailAddress(e.target.value);
           }}
           allowClear
         />
